@@ -1,0 +1,64 @@
+.lk
+  &-amount
+    font-size: 20px
+    font-weight: 700
+    margin-bottom: 20px
+  &-wrapper
+    max-width: 620px
+    margin-left: 230px
+    margin-bottom: 140px
+    & .el-tabs
+        &__header
+          margin-bottom: 25px
+        &__active-bar
+          background-color: $primary-color
+          bottom: 10px
+          height: 1px
+        &__nav-wrap::after
+          content: none
+        &__item
+          &:hover
+            color: $primary-color
+          &.is-active
+            color: $primary-color
+  &-rows
+    margin-bottom: 20px
+  &-new-address
+    position: relative
+    & .el-input
+      opacity: 0
+      pointer-events: none
+      transition: opacity .3s linear
+      width: 64%
+    & .el-button
+      position: absolute
+      left: 0
+      right: 100%
+      transition: all .2s linear
+    &.newAddressActive
+      & .el-input
+        opacity: 1
+        pointer-events: all
+      & .el-button
+        left: 100%
+        transform: translateX(-100%)
+        right: 0
+
+  &-tab-row
+    display: grid
+    align-items: center
+    border-bottom: 1px solid #F8F9FA
+    min-height: 66px
+    &.personal-row
+      grid-template-columns: 1fr 1fr 1fr
+      grid-column-gap: 20px
+    &.address-row
+      grid-template-columns: 3fr 1fr
+      grid-column-gap: 20px
+      i
+        color: #AEAEAE
+        font-size: 22px
+        cursor: pointer
+
+
+

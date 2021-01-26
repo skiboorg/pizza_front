@@ -1,0 +1,207 @@
+$default-text-color: #262626
+$no-info-text-color: #72879F
+$primary-color: #DA3511
+$primary-gradient: linear-gradient(89.85deg, #E73A14 5.28%, #EA3C24 99.83%)
+$grey-color: #AEAEAE
+
+body
+  font-family: 'Inter', sans-serif
+  color: $default-text-color
+  font-size: 16px
+  padding-top: 230px
+
+
+
+@media (max-width: 850px)
+  body
+    padding-top: 200px
+
+.nuxt-link-exact-active
+  color: $primary-color !important
+.container
+  max-width: 1320px
+  padding: 0 10px
+  margin: 0 auto
+
+.d-flex
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+.text-center
+  text-align: center
+
+.text-left
+  text-align: left
+
+.text-right
+  text-align: right
+
+.text-bold
+  font-weight: bold
+
+.text-900
+  font-weight: 900
+
+.font-20
+  font-size: 20px
+
+.font-12
+  font-size: 12px
+
+.font-raleway
+  font-family: 'Raleway', sans-serif
+
+.c-pointer
+  cursor: pointer
+
+.link-active
+  border-bottom: 1px dashed $default-text-color
+  display: inline-block
+
+.color-primary
+  color: $primary-color
+.is-empty
+  color: $no-info-text-color
+
+.mb-10
+  margin-bottom: 10px !important
+
+.mb-20
+  margin-bottom: 20px !important
+
+.mb-25
+  margin-bottom: 25px !important
+.mb-30
+  margin-bottom: 30px !important
+
+.mb-40
+  margin-bottom: 40px !important
+
+.mb-50
+  margin-bottom: 50px !important
+
+.mb-60
+  margin-bottom: 60px !important
+
+.el-popup-parent--hidden
+  //overflow: hidden //auto
+  padding-right: 0 !important
+  overflow: hidden !important
+  position: relative !important
+  padding-left: 0px
+  //padding-top: 0px
+  padding-right: 0px
+  margin-left: 0
+  margin-top: 0
+  margin-right: 15px !important
+.el-button
+  height: 47px
+  font-family: 'Montserrat', sans-serif
+  &--primary
+    border-color: $primary-color
+    background: $primary-color
+    color: #ffffff
+    &:focus
+      border-color: $primary-color
+      background: #D92B05
+
+    &:hover
+      border-color: $primary-color
+      background: #DA3511
+
+    &:active
+      border-color: $primary-color
+      background: #D92B05
+    &.is-disabled
+      background: #DA3511
+      opacity: .6
+      &:hover
+        border-color: $primary-color
+        background: #DA3511
+
+  &.is-plain
+    border-color: $primary-color
+    color: $primary-color
+    &:focus
+      border-color: $primary-color
+      color: #ffffff
+      background: $primary-gradient
+    &:hover
+      border-color: $primary-color
+      color: #ffffff
+      background: $primary-gradient
+    &:active
+      border-color: $primary-color
+      color: #ffffff
+      background: $primary-gradient
+
+.el-tooltip__popper.is-light
+  border: none
+  box-shadow: 0px 11px 84px rgba(0, 0, 0, .15)
+  & .popper__arrow
+      border: none
+.el-input
+  height: 47px
+  &__inner
+    border: none
+    border-radius: 3px
+    pointer-events: none
+    height: 47px
+    line-height: 47px
+  &.in-edit-mode
+    & .el-input__inner
+        background: #F8F9FA
+        pointer-events: all
+
+.authModal
+  & .el-dialog
+    padding: 20px 40px
+    max-width: 440px
+    &__header
+      padding: 0
+    &__headerbtn .el-dialog__close
+      color: $default-text-color
+      font-size: 22px
+
+.modal
+  &-title
+    font-size: 20px
+    font-weight: 700
+    text-align: center
+    color: $default-text-color
+    margin-bottom: 30px
+  &-subtitle
+    margin-bottom: 20px
+    color: $default-text-color
+    line-height: 24px
+    word-break: break-word
+  &-text
+    text-align: center
+    margin-bottom: 10px
+    p
+      font-size: 12px
+      color: #7A7878
+      span
+        font-weight: bold
+        cursor: pointer
+    &:last-child
+      margin-bottom: 0
+  & .el-input
+    margin-bottom: 10px
+  & .el-button
+    width: 100%
+    margin-top: 10px
+    margin-bottom: 20px
+
+.swiper-pagination-bullets
+  bottom: 20px !important
+
+.swiper-pagination-bullet
+  width: 10px !important
+  height: 10px !important
+  background: $primary-color !important
+.swiper-pagination-bullet-active
+  background: $primary-color !important
+.swiper-slide
+  user-select: none

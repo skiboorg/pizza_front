@@ -1,0 +1,133 @@
+.item-modal
+  & .el-dialog
+    max-width: 660px
+    &__body
+      padding: 20px 15px
+      color: $default-text-color
+      font-size: 16px
+    &__header
+      padding: 0
+    &__headerbtn
+      top: -3px
+      right: -30px
+      i
+        color: #FFFFFF
+        font-size: 20px
+        &:hover
+          color: $primary-color
+  &__header
+    @extend .d-flex
+  &__title
+    font-size: 23px
+    font-family: 'Raleway',sans-serif
+    font-weight: 900
+    margin-bottom: 10px
+  &__ingridients
+    margin-bottom: 30px
+    max-width: 500px
+    word-break: break-word
+    line-height: 24px
+  &__ingridient
+    display: inline-block
+    position: relative
+    color: #8C8C8C
+    margin-right: 5px
+    &::after
+      content: ','
+      text-decoration: none !important
+    &:last-child
+      &::after
+        content: none
+    p
+      display: inline-flex
+      align-items: center
+  &__sizes
+    @extend .d-flex
+    max-width: 200px
+    margin-bottom: 20px
+    & .el-radio
+
+      background: #F8F9FA
+      padding: 6px 10px
+      border-radius: 3px
+      height: 28px
+      margin-right: 0
+      &.is-checked
+        background: #FFE0DC
+      &__input.is-checked+.el-radio__label
+        color: $default-text-color
+      &__inner
+        display: none
+      &.is-bordered
+        border: none
+        margin-left: 0 !important
+      &__label
+        padding-left: 0
+        font-size: 16px
+        color: #8C8C8C
+  &__slider
+    margin-bottom: 35px
+    &--title
+      font-weight: 600
+      margin-bottom: 10px
+    &--wrapper
+      & .swiper-button-next
+        right: 0
+        top: 46px
+        &::after
+          content: url(/right-arrow.svg)
+      & .swiper-button-prev
+        left: 0
+        top: 46px
+        &::after
+          content: url(/left-arrow.svg)
+    &--item
+      position: relative
+      cursor: pointer
+      text-align: center
+      img
+        width: 85px
+        height: 100px
+        object-fit: cover
+        box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.05)
+        border-radius: 3px
+      &.itemChecked
+        &::after
+          position: absolute
+          content: url(/checked-20-icon.svg)
+          bottom: 30px
+          right: -5px
+
+  &__summ
+    margin-bottom: 15px
+    @extend .d-flex
+    font-weight: 600
+    max-width: 150px
+
+
+.ingridientRemoved
+  cursor: pointer
+  &::before
+    position: absolute
+    content: ''
+    background: #8C8C8C
+    left: 0
+    height: 1px
+    bottom: 10px !important
+    border-bottom: none !important
+    right: 25px !important
+  img
+    margin-left: 5px
+
+.ingridientCanRemoved
+  cursor: pointer
+  img
+    margin-left: 5px
+  &::before
+    position: absolute
+    content: ''
+    left: 0
+    bottom: 3px
+    right: 25px
+    height: 1px
+    border-bottom: 1px dashed #8C8C8C

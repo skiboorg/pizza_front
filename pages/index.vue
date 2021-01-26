@@ -36,9 +36,14 @@
       <div class="container">
         <h3 class="home-page-category__title">{{category.name}}</h3>
         <div class="home-page-category__items">
-          <div class="home-page-category__item">
+          <PizzaConstructor v-if="category.with_constructor"/>
+          <ItemCard/>
+          <ItemCard/>
+          <ItemCard/>
+          <ItemCard/>
+          <ItemCard/>
 
-          </div>
+
         </div>
       </div>
     </section>
@@ -47,25 +52,31 @@
 </template>
 
 <script>
+import ItemCard from '@/components/ItemCard'
+import PizzaConstructor from '@/components/PizzaConstructor'
 export default {
+  components:{
+    ItemCard,
+    PizzaConstructor
+  },
   data() {
     return {
       scrollPosition: null,
-       categories:[
-        {id:1,name:'Шашлык'},
-        {id:2,name:'Пицца'},
-        {id:3,name:'Роллы'},
-        {id:4,name:'Шаурма'},
-        {id:5,name:'Пироги'},
-        {id:6,name:'Закуски'},
-        {id:7,name:'Напитки'},
-        {id:8,name:'Рыба'},
-        {id:9,name:'Акции'},
+      categories:[
+        {id:1,name:'Шашлык',with_constructor:false},
+        {id:2,name:'Пицца',with_constructor:true},
+        {id:3,name:'Роллы',with_constructor:false},
+        {id:4,name:'Шаурма',with_constructor:false},
+        {id:5,name:'Пироги',with_constructor:false},
+        {id:6,name:'Закуски',with_constructor:false},
+        {id:7,name:'Напитки',with_constructor:false},
+        {id:8,name:'Рыба',with_constructor:false},
+        {id:9,name:'Акции',with_constructor:false},
       ],
       sliderHomeTopOption: {
 
         slidesPerView: 2,
-        spaceBetween: 30,
+        spaceBetween: 10,
         loop:true,
         centeredSlides: true,
         pagination: {
@@ -101,16 +112,16 @@ export default {
   watch: {
   },
   computed: {
-      homeTopSlider() {
-        return this.$refs.homeTopSlider.$swiper
-      }
-    },
+    homeTopSlider() {
+      return this.$refs.homeTopSlider.$swiper
+    }
+  },
   mounted() {
 
   },
   methods: {
     homeTopSliderPrev(){
-        this.homeTopSlider.slidePrev()
+      this.homeTopSlider.slidePrev()
     },
     homeTopSliderNext(){
       this.homeTopSlider.slideNext()

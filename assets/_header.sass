@@ -1,0 +1,157 @@
+.header
+  position: fixed
+  width: 100%
+  top: 0
+  //margin-bottom: 80px
+  background: #ffffff
+  z-index: 110
+  transition: all .2s linear
+  &.halfHeader
+    top: -133px
+    box-shadow: rgba(6, 5, 50, 0.1) 0px 4px 30px
+  &-mobile-menu
+    position: absolute
+    background: #ffffff
+    opacity: 0
+    pointer-events: none
+    top: 0px
+    left: 0px
+    right: 0px
+    height: 100vh
+    transition: all .2s linear
+    z-index: 10
+    padding-top: 55px
+    &.mobileMenuActive
+      opacity: 1
+      pointer-events: all
+      top: 10px
+    &__close
+      position: absolute
+      right: 20px
+      top: 20px
+    &__wrapper
+      padding: 0 15px
+      display: flex
+      flex-direction: column
+      align-items: flex-start
+      a
+        display: block
+        margin-bottom: 20px
+        color: inherit
+        font-size: 14px
+    &__social
+      @extend .d-flex
+      width: 50%
+      margin-bottom: 10px
+    &__apps
+      @extend .d-flex
+      width: 100%
+    &__app
+      @extend .d-flex
+      background: #F8F9FA
+      border-radius: 3px
+      padding: 10px 8px
+      flex-basis: 45%
+      p
+        font-size: 10px
+        flex-basis: 60%
+
+  &-top
+    @extend .d-flex
+    padding: 30px 0
+    &-logo
+      padding: 7px 7px 5px
+      background: #1B1918
+      display: inline-block
+      border-radius: 6px
+      cursor: pointer
+      margin-right: 15px
+    &-address
+      flex-grow: 1
+    &-nav
+      flex-grow: 2
+      @extend .d-flex
+      a
+        color: inherit
+    &-login
+      cursor: pointer
+      flex-grow: 2
+    &-phone
+      cursor: pointer
+    &-mobile-phone
+      display: none
+    &-mobile-toggle
+      display: none
+
+  &-bottom
+    position: sticky
+    @extend .d-flex
+    padding: 5px 0
+    &-menu
+      @extend .d-flex
+      flex-grow: 2
+      p
+        cursor: pointer
+      a
+        &:hover
+          color: $primary-color
+      &__slider
+        position: relative
+        display: none
+        max-width: 670px
+        &--overlay
+          display: none
+          position: absolute
+          right: -1px
+          width: 39px
+          top: 0
+          bottom: 0
+          background: linear-gradient(270deg, #ffffff 0%, #ffffff59 100%)
+          z-index: 10
+    &-cart
+      flex-grow: 1
+      @extend .d-flex
+      justify-content: flex-end
+      p
+        background: rgba(203, 203, 203, 0.26)
+        border-radius: 6px
+        padding: 4px 12px
+        margin-right: 5px
+      svg
+        cursor: pointer
+
+
+@media (max-width: 850px)
+  .header
+    &-top
+      &-address
+        display: none
+      &-nav
+        display: none
+      &-login
+        display: none
+      &-phone
+        display: none
+      &-mobile-phone
+        display: block
+      &-mobile-toggle
+        display: block
+    &-bottom
+      &-menu
+        display: none
+        &__slider
+          display: block
+          &--overlay
+            display: block
+      &-cart
+        p
+          display: none
+@media (max-width: 768px)
+  .header-bottom-menu__slider
+    width: 600px
+
+@media (max-width: 500px)
+  .header-bottom-menu__slider
+    width: 306px
+  .hideBottom
+    display: none

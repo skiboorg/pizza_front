@@ -4,9 +4,8 @@
 
 <script>
   export default {
-    layout: 'streamer_lk',
-    scrollToTop: false,
-    auth: true,
+    scrollToTop: true,
+    // auth: true,
     data() {
       return {
       };
