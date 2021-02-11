@@ -7,18 +7,19 @@
             <img src="/logo_big.svg" alt="" data-not-lazy>
           </div>
           <div class="header-top-address">
-            <p>Новый Уренгой</p>
-            <p>Доставка с 8:00 до 22:00</p>
+            <p @click="currentCityIsOK=false, cityModal=true" class="header-top-address__link">{{currentCity.name}}</p>
+            <p>{{currentCity.info}}</p>
           </div>
           <nav class="header-top-nav">
             <nuxt-link :to="link.url" v-for="link in navLinks" :key="link.id">{{link.name}}</nuxt-link>
           </nav>
-          <div @click="authModal=true" class="header-top-login text-center">
+          <div @click="$auth.loggedIn ? $router.push('/lk'):authModal=true" class="header-top-login text-center">
             <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M13.4022 14.5484C13.4301 14.5484 13.4581 14.5484 13.4916 14.5484C13.5028 14.5484 13.514 14.5484 13.5252 14.5484C13.5419 14.5484 13.5643 14.5484 13.5811 14.5484C15.2193 14.5204 16.5444 13.9445 17.5229 12.843C19.6755 10.4164 19.3177 6.25658 19.2785 5.8596C19.1388 2.87948 17.7298 1.45372 16.5668 0.788362C15.7002 0.290743 14.6881 0.0223649 13.5587 0H13.5196C13.514 0 13.5028 0 13.4972 0H13.4637C12.843 0 11.6242 0.100642 10.4556 0.765997C9.28144 1.43135 7.85009 2.85711 7.71031 5.8596C7.67117 6.25658 7.31333 10.4164 9.46595 12.843C10.4388 13.9445 11.7639 14.5204 13.4022 14.5484ZM9.20316 5.99938C9.20316 5.98261 9.20875 5.96583 9.20875 5.95465C9.39326 1.94574 12.2392 1.51522 13.4581 1.51522H13.4804C13.4916 1.51522 13.5084 1.51522 13.5252 1.51522C15.0348 1.54877 17.6012 2.1638 17.7745 5.95465C17.7745 5.97142 17.7745 5.9882 17.7801 5.99938C17.7857 6.03852 18.1771 9.84055 16.3991 11.8422C15.6946 12.6362 14.7552 13.0275 13.5196 13.0387C13.5084 13.0387 13.5028 13.0387 13.4916 13.0387C13.4804 13.0387 13.4749 13.0387 13.4637 13.0387C12.2336 13.0275 11.2887 12.6362 10.5898 11.8422C8.81737 9.85173 9.19757 6.03293 9.20316 5.99938Z" fill="black"/>
               <path d="M24.9815 21.4479C24.9815 21.4423 24.9815 21.4367 24.9815 21.4311C24.9815 21.3864 24.9759 21.3417 24.9759 21.2913C24.9424 20.1843 24.8697 17.5955 22.4431 16.768C22.4263 16.7624 22.404 16.7569 22.3872 16.7513C19.8655 16.1083 17.7688 14.6546 17.7465 14.6378C17.4054 14.3974 16.9357 14.4812 16.6953 14.8223C16.4549 15.1634 16.5388 15.633 16.8798 15.8734C16.9749 15.9405 19.2002 17.4893 21.9846 18.205C23.2874 18.6691 23.4327 20.0613 23.4719 21.3361C23.4719 21.3864 23.4719 21.4311 23.4775 21.4758C23.4831 21.9791 23.4495 22.7562 23.3601 23.2035C22.4543 23.7179 18.9039 25.4959 13.5027 25.4959C8.12398 25.4959 4.55119 23.7123 3.63982 23.1979C3.55036 22.7506 3.51122 21.9735 3.52241 21.4703C3.52241 21.4255 3.528 21.3808 3.528 21.3305C3.56714 20.0557 3.71251 18.6635 5.01526 18.1994C7.79969 17.4837 10.025 15.9293 10.12 15.8678C10.4611 15.6274 10.545 15.1578 10.3046 14.8167C10.0641 14.4756 9.59447 14.3918 9.25341 14.6322C9.23104 14.649 7.14552 16.1027 4.61269 16.7457C4.59033 16.7513 4.57355 16.7569 4.55678 16.7624C2.13019 17.5955 2.05751 20.1843 2.02396 21.2857C2.02396 21.3361 2.02396 21.3808 2.01837 21.4255C2.01837 21.4311 2.01837 21.4367 2.01837 21.4423C2.01278 21.733 2.00719 23.2259 2.30352 23.9751C2.35943 24.1205 2.46007 24.2435 2.59426 24.3274C2.762 24.4392 6.78209 27 13.5083 27C20.2346 27 24.2546 24.4336 24.4224 24.3274C24.551 24.2435 24.6572 24.1205 24.7131 23.9751C24.9927 23.2315 24.9871 21.7386 24.9815 21.4479Z" fill="black"/>
             </svg>
-            <p class="color-primary">Войти</p>
+            <p  class="color-primary">{{$auth.loggedIn ? 'ЛК' : 'Войти'}} </p>
+
           </div>
           <div class="header-top-phone text-right">
             <p><a class="color-primary text-bold font-20" target="_blank" href="tel:89095483434">89095483434</a></p>
@@ -58,7 +59,9 @@
 
             </div>
             <div class="header-mobile-menu__wrapper">
-              <a href="#" @click.prevent="authModal=true">Войти</a>
+              <a v-if="!this.$auth.loggedIn" href="#" @click.prevent="authModal=true">Войти</a>
+              <nuxt-link v-else to="/lk">ЛК</nuxt-link>
+              <nuxt-link to="/">Главная</nuxt-link>
               <nuxt-link :to="link.url" v-for="link in navLinks" :key="link.id">{{link.name}}</nuxt-link>
               <a href="#">Телефон доставки: 8-ххх-ххх-хх-хх</a>
               <div class="header-mobile-menu__social">
@@ -107,24 +110,34 @@
             </client-only>
           </div>
           <div class="header-bottom-menu">
-            <span v-for="item in menuItems" :key="item.id">
+            <span v-for="item in categories" :key="item.id">
               <span v-if="isHomePage">
-                <p v-if="!item.url"><a @click="currentCatAnchor=item.id"
-                                       :class="{'color-primary':currentCatAnchor===item.id}"
-                                       href="#" v-scroll-to="`#catID_${item.id}`">{{item.name}}</a> </p>
-                <p v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
+                <p class="header-bottom-menu__item" v-if="!item.url"><a @click="currentCatAnchor=item.id"
+                                                                        :class="{'color-primary':currentCatAnchor===item.id}"
+                                                                        href="#" v-scroll-to="`#catID_${item.id}`">{{item.name}}</a> </p>
+                <p class="header-bottom-menu__item" v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
               </span>
               <span v-else>
-                <p v-if="!item.url"><nuxt-link  :to="`/#catID_${item.id}`">{{item.name}}</nuxt-link></p>
-                <p v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
+                <p class="header-bottom-menu__item" v-if="!item.url"><nuxt-link  :to="`/#catID_${item.id}`">{{item.name}}</nuxt-link></p>
+                <p class="header-bottom-menu__item" v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
               </span>
 
             </span>
 
           </div>
+          <!--          {{$store.getters['cart/getCart']}}-->
           <div class="header-bottom-cart">
-            <p>1000р</p>
-            <img src="/cart-icon.svg" alt="" data-not-lazy>
+            <div  class="header-bottom-cart__inner" @mouseover="cartHeaderActive=true" @mouseleave="cartHeaderActive=false">
+              <p class="header-bottom-cart__summ">{{this.$store.getters['cart/getCart'].total_price}}р</p>
+              <div class="header-bottom-cart__icon" >
+                <div v-if="items_in_cart > 0" class="header-bottom-cart__icon-num">
+                  {{items_in_cart}}
+                </div>
+                <img @click="$router.push('/cart')" src="/cart-icon.svg" alt="" data-not-lazy>
+              </div>
+              <Cart :recommended_items_count="2" :souses_items_count="4" :cartHeader="true" :cartHeaderActive="cartHeaderActive"/>
+            </div>
+
           </div>
         </div><!--header-bottom -->
       </div>
@@ -134,7 +147,7 @@
         <h3 class="modal-title">Войти</h3>
         <el-input class="in-edit-mode" v-mask="'+7 (###) ###-##-##'" placeholder="+7 (xxx) xxx-xx-xx" v-model="userLogin.phone"></el-input>
         <el-input class="in-edit-mode" show-password placeholder="Пароль"v-model="userLogin.password"></el-input>
-        <el-button @click="$router.push('/lk')" type="primary">Войти</el-button>
+        <el-button @click="userLoginAction" type="primary">Войти</el-button>
         <div class="modal-text"><p>Еще нет аккаунта? <span @click="authModalTab='registerTab'">Зарегистрироваться</span></p></div>
         <div class="modal-text"><p><span @click="authModalTab='restoreTab'">Забыли пароль?</span></p></div>
       </div><!-- loginTab-->
@@ -143,7 +156,7 @@
         <el-input class="in-edit-mode" v-mask="'+7 (###) ###-##-##'" placeholder="+7 (xxx) xxx-xx-xx" v-model="userRegister.phone"></el-input>
         <el-input class="in-edit-mode" show-password placeholder="Пароль"v-model="userRegister.password1"></el-input>
         <el-input class="in-edit-mode" show-password placeholder="Пароль еще раз"v-model="userRegister.password2"></el-input>
-        <el-button type="primary">Зарегистрироваться</el-button>
+        <el-button type="primary" @click="userRegisterAction">Зарегистрироваться</el-button>
         <div class="modal-text"><p>Уже есть аккаунт?<span @click="authModalTab='loginTab'">Войти</span></p></div>
       </div><!-- registerTab-->
       <div v-if="authModalTab==='restoreTab'"><!-- restoreTab-->
@@ -167,13 +180,39 @@
 
 
     </el-dialog>
+    <el-dialog class="cityModal modal" :visible.sync="cityModal">
+      <div v-if="currentCityIsOK">
+        <h3 class="modal-title">Ваш город<br>{{currentCity.name}} ?</h3>
+        <div class="modal-group">
+          <el-button @click="changeCity(currentCity.id)" type="primary">Да</el-button>
+          <el-button @click="currentCityIsOK = false" plain>Нет</el-button>
+        </div>
+      </div>
+      <div v-else>
+        <h3 class="modal-title">Выберите город</h3>
+        <div class="modal-cities">
+          <p @click="changeCity(city.id)" class="modal-city" v-for="city in this.$store.getters['city/getCity']" :key="city.id">{{city.name}}</p>
+        </div>
+
+      </div>
+
+    </el-dialog>
   </div>
 
 </template>
 <script>
+import Cart from "@/components/Cart"
+
 export default {
+  components:{
+    Cart
+  },
   data() {
     return {
+      cityModal: false,
+      cartHeaderActive: false,
+      currentCity:{id:'',name:'',info:''},
+      currentCityIsOK:true,
       currentCatAnchor:null,
       scrollPosition:null,
       userLogin:{
@@ -197,11 +236,12 @@ export default {
       restoreButtonLoading:false,
       mobileMenuActive:false,
       navLinks:[
-        {id:1,url:'/',name:'Акции'},
+        {id:1,url:'/promotions',name:'Акции'},
         {id:2,url:'/about',name:'О нас'},
         {id:3,url:'/delivery',name:'Доставка и оплата'},
         {id:4,url:'/contacts',name:'Контакты'}
       ],
+      categories:null,
       menuItems:[
         {id:1,name:'Шашлык',url:null},
         {id:2,name:'Пицца',url:null},
@@ -237,6 +277,14 @@ export default {
     };
   },
   watch: {
+    '$store.state.city.main_city': function() {
+      console.log(this.$store.state.city.main_city)
+      this.currentCity = this.$store.getters['city/getCity'].find(x => x.id === this.$store.state.city.main_city)
+    },
+    '$store.state.products.categories': function() {
+      console.log(this.$store.state.products.categories)
+      this.categories = this.$store.getters['products/getCategories']
+    },
     '$route.path': function(val) {
       let fullPath =this.$route.fullPath.split('#')
       if (fullPath.length>1){
@@ -248,11 +296,59 @@ export default {
       this.$route.path === '/' ? this.isHomePage = true : this.isHomePage = false
     }
   },
+  computed:{
+    items_in_cart () {
+      return this.$store.getters['cart/getCart'].items.length +
+        this.$store.getters['cart/getCart'].souces.length +
+        this.$store.getters['cart/getCart'].pizza_constructors.length
+    }
+  },
+  beforeCreate() {
+    console.log('header before create',this.$auth.$storage.getCookie('city_id'))
+    this.$auth.$storage.getCookie('city_id') ? null : this.cityModal = true
+  },
   mounted() {
     window.addEventListener('scroll', this.updateScroll);
+
     this.$route.path === '/' ? this.isHomePage = true : this.isHomePage = false
+    this.currentCity = this.$store.getters['city/getCity'].find(x => x.id === this.$auth.$storage.getCookie('city_id'))
+    this.categories = this.$store.getters['products/getCategories']
+    console.log('city/getCity',this.$store.getters['city/getCity'])
+    console.log('header mounted',this.$store.getters['city/getMainCity'])
+
+    if (!this.$auth.$storage.getCookie('session_id')){
+      this.$auth.$storage.setCookie('session_id', this.uuidv4())
+      console.log('create session_id')
+    }else {
+      console.log('session_id exists')
+    }
+
+
+
   },
   methods: {
+    notify(title,message,type){
+      this.$notify({
+        title: title,
+        message: message,
+        type: type
+      });
+    },
+    uuidv4() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    },
+    async changeCity (id) {
+      await this.$store.dispatch('city/changeMainCity',id)
+      await this.$store.dispatch('products/fetchItems')
+      await this.$axios.post(`api/cart/erase_cart/${this.$auth.$storage.getCookie('session_id')}`)
+      await this.$store.dispatch('cart/eraseCart')
+      this.cityModal = false
+      // this.currentCityIsOK = true
+
+    },
     updateScroll() {
       this.scrollPosition = window.scrollY
     },
@@ -284,9 +380,30 @@ export default {
         this.restoreSecondsLeft = 59
         this.sendRestoreSMS()
       }
+    },
+    async userRegisterAction(){
+      try{
+        let response =  this.$axios.post('/auth/users/', {
+          phone:this.userRegister.phone,
+          password:this.userRegister.password2,
+        })
 
+        this.notify('Успешно','Аккаунт создан','success')
+        this.authModalTab='loginTab'
+      }catch (e) {
+        this.notify('Ошибка','Проверьте введеные данные','error')
+      }
+    },
+    async userLoginAction() {
 
-    }
+      try {
+        let response = await this.$auth.loginWith('local', { data: this.userLogin })
+        await this.$store.dispatch('cart/fetchCart')
+        this.authModal=false
+      } catch (error) {
+        this.notify('Ошибка','Проверьте введеные данные','error')
+      }
+    },
 
   }
 }

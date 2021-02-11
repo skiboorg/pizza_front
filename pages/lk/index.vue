@@ -1,48 +1,69 @@
 <template>
   <div class="container">
     <div class="lk-wrapper">
-      <p class="lk-amount">Баллов начислено: 653</p>
+      <p class="lk-amount">Баллов начислено: {{$auth.user.bonuses}}</p>
       <el-tabs v-model="activeTab" >
         <el-tab-pane label="Личные данные" name="tab1">
           <div class="lk-tab-row personal-row">
             <p>Имя</p>
-            <el-input placeholder="Введите Ваше имя" @input="editField='name'" :class="{'in-edit-mode':!userData.name}" v-model="userData.name"></el-input>
-            <el-button @click="userButtonClick('name')" plain>
-              {{userData.name ? editField === 'name'? 'Сохранить' :'Изменить' : 'Добавить'}}
-            </el-button>
+            <el-input placeholder="Введите Ваше имя"  @input="editField='fio'" :class="{'in-edit-mode':!userData.fio}" v-model="userData.fio"></el-input>
+
           </div>
           <div class="lk-tab-row personal-row">
             <p>Номер телефона</p>
-            <p class="is-empty">+7(xxx) xxx-xx-xx</p>
+            <p class="is-empty">{{userData.phone}}</p>
           </div>
           <div class="lk-tab-row personal-row">
             <p>Email</p>
             <el-input placeholder="Введите e-mail" @input="editField='email'" :class="{'in-edit-mode':!userData.email}" v-model="userData.email"></el-input>
-             <el-button @click="userButtonClick('email')" plain>
-              {{userData.email ? editField === 'email'? 'Сохранить' :'Изменить' : 'Добавить'}}
-            </el-button>
 
           </div>
-          <div class="lk-tab-row personal-row">
-            <p>Дата рождения</p>
-             <el-input placeholder="ДД.ММ.ГГГГ" @input="editField='birthday'" :class="{'in-edit-mode':!userData.birthday}" v-model="userData.birthday"></el-input>
-             <el-button @click="userButtonClick('birthday')" plain>
-              {{userData.birthday ? editField === 'birthday'? 'Сохранить' :'Изменить' : 'Добавить'}}
-            </el-button>
+          <div class="lk-tab-row personal-row mb-30">
+            <p @click="$auth.logout()">Дата рождения</p>
+            <el-date-picker
+              v-model="userData.birthday"
+              type="date"
+              :class="{'in-edit-mode':!userData.birthday}"
+              placeholder="ДД.ММ.ГГГГ"
+              format="dd/MM/yyyy"
+              value-format="yyyy-MM-dd"
+              default-value="2000-10-01">
+            </el-date-picker>
+
+
 
           </div>
+          <el-button plain @click="userDataChange">Изменить</el-button>
+          <el-button type="primary" @click="userDataSave">Сохранить</el-button>
 
         </el-tab-pane><!-- tab1-->
         <el-tab-pane label="Адреса доставки" name="tab2">
           <div class="lk-rows">
-            <div class="lk-tab-row address-row" v-for="(item,index) in userAddress" :key="item.id">
-             <p>{{item.address}}</p>
-             <p><i class="el-icon-delete"></i></p>
-           </div>
+            <div class="lk-tab-row address-row" v-for="item in $auth.user.addresses" :key="item.id">
+              <p>
+                <span v-show="item.street">ул.{{item.street}} </span>
+                <span v-show="item.house">д.{{item.house}} </span>
+                <span v-show="item.flat">кв.{{item.flat}} </span>
+                <span v-show="item.podezd">п.{{item.podezd}} </span>
+                <span v-show="item.code">код:{{item.code}} </span>
+                <span v-show="item.floor">эт.{{item.floor}}</span>
+                </p>
+              <p><i @click="deleteAddress(item.id)" class="el-icon-delete"></i></p>
+            </div>
           </div>
-          <div class="lk-new-address" :class="{'newAddressActive':newAddressActive}">
-            <el-input v-model="newAddress" class="in-edit-mode" placeholder="Новый адрес доставки"></el-input>
-             <el-button type="primary" @click="addNewAddressClick">{{newAddressActive ? 'Сохранить новый адрес ' : 'Добавить новый адрес'}}</el-button>
+          <p class="mb-10">Добавить адрес</p>
+          <div class="lk-new-address newAddressActive">
+            <div class="checkout-form__group group-3-1">
+            <el-input class="in-edit-mode " v-model="newAddress.street" placeholder="Улица"></el-input>
+            <el-input class="in-edit-mode " v-model="newAddress.house" placeholder="Дом"></el-input>
+          </div>
+          <div class="checkout-form__group group-4">
+            <el-input class="in-edit-mode " v-model="newAddress.flat" placeholder="Кв"></el-input>
+            <el-input class="in-edit-mode " v-model="newAddress.podezd" placeholder="Подъезд"></el-input>
+            <el-input class="in-edit-mode " v-model="newAddress.code" placeholder="Код двери"></el-input>
+            <el-input class="in-edit-mode " v-model="newAddress.floor" placeholder="Этаж"></el-input>
+          </div>
+            <el-button type="primary" @click="userAddressSave">Сохранить</el-button>
           </div>
 
 
@@ -50,7 +71,6 @@
         <el-tab-pane label="Смена пароля" name="tab3">
 
         </el-tab-pane><!-- tab3-->
-
       </el-tabs>
     </div>
 
@@ -59,22 +79,28 @@
 
 <script>
 export default {
+  async fetch({store}){
+    await store.dispatch('city/fetchCity')
+    await store.dispatch('cart/fetchCart')
+  },
   data() {
     return {
       activeTab:'tab1',
       editField:null,
-      userData:{
-        name:'Иван',
-        email:null,
-        birthday:null,
+      newAddress:{
+          street:null,
+          house:null,
+          flat:null,
+          podezd:null,
+          code:null,
+          floor:null
       },
-      newAddressActive:false,
-      newAddress:null,
-      userAddress:[
-        {id:1,address:'Новый Уренгой, Железнодорожная 43'},
-        {id:2,address:'Новый Уренгой, Железнодорожная 45'},
-        {id:3,address:'Новый Уренгой, Железнодорожная 47'},
-      ]
+      userData:{
+        fio:this.$auth.user.fio,
+        email:this.$auth.user.email,
+        birthday:this.$auth.user.birthday,
+        phone:this.$auth.user.phone,
+      },
 
     };
   },
@@ -84,13 +110,26 @@ export default {
   mounted() {
   },
   methods: {
-    userButtonClick(field){
-      this.userData[field] = null
-      this.editField = field
+    userDataChange(){
+      this.userData.fio = null
+      this.userData.email = null
+      this.userData.birthday = null
     },
-    addNewAddressClick(){
-      this.newAddressActive  = !this.newAddressActive
-    }
+    async userDataSave(){
+      const responce = await this.$axios.post('/api/user/update',{userData:this.userData})
+      console.log(responce.data)
+      this.$auth.fetchUser()
+    },
+    async userAddressSave(){
+      const responce = await this.$axios.post('/api/user/add_address',this.newAddress)
+      console.log(responce.data)
+      this.$auth.fetchUser()
+    },
+    async deleteAddress(id){
+      const responce = await this.$axios.delete(`/api/user/delete_address/${id}`)
+
+      this.$auth.fetchUser()
+    },
   }
 }
 </script>

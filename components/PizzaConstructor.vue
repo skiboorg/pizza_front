@@ -1,5 +1,6 @@
 <template>
   <div class="">
+
     <div class="item-card item-card__constructor">
       <div class="item-card__top" >
         <img src="/constr.png" alt="">
@@ -19,6 +20,7 @@
     </div>
     <el-dialog class="pizza-constructor" :visible.sync="constructorModal" @closed="modalClose">
       <div class="pizza-constructor__inner">
+
         <div class="pizza-constructor__left">
           <div class="pizza-constructor__left--title">Выберите  половинки пицц</div>
           <div class="pizza-constructor__left--pizza " :class="{'pizzaDisabled':!firstPizza}">
@@ -26,7 +28,7 @@
             <div v-if="!firstPizza"><p>Выберите пиццу</p> </div>
             <div v-else>
               <p>{{firstPizza.name}}</p>
-              <span v-for="ingridient in firstPizza.ingridients" :key="ingridient.id">{{ingridient.name}}</span>
+              <span v-for="ingridient in firstPizza.base_ingridients" :key="ingridient.id">{{ingridient.name}}</span>
             </div>
 
           </div>
@@ -35,7 +37,7 @@
             <div v-if="!secondPizza"><p>Выберите пиццу</p> </div>
             <div v-else>
               <p>{{secondPizza.name}}</p>
-              <span v-for="ingridient in secondPizza.ingridients" :key="ingridient.id">{{ingridient.name}}</span>
+              <span v-for="ingridient in secondPizza.base_ingridients" :key="ingridient.id">{{ingridient.name}}</span>
             </div>
           </div>
           <div class="pizza-constructor__left--bottom">
@@ -44,20 +46,20 @@
             <p v-if="pizzaPrice>0">{{pizzaPrice}}р</p>
             <p v-else><i class="el-icon-loading"></i></p>
           </div>
-          <el-button :disabled="!firstPizzaIndex || !secondPizzaIndex" type="primary">Выбрать</el-button>
+          <el-button @click="addToCart" :disabled="!firstPizzaIndex || !secondPizzaIndex" type="primary">Выбрать</el-button>
           </div>
 
         </div>
         <div class="pizza-constructor__right">
           <div class="pizza-constructor__right--pizzas">
             <!--            pizzaNotChecked pizzaChecked-->
-            <div @click="selectPizzaPart(pizza.id,index)" class="pizza-constructor__right--pizza "
+            <div @click="selectPizzaPart(pizza)" class="pizza-constructor__right--pizza "
                  :class="{'pizzaChecked': firstPizzaIndex === pizza.id || secondPizzaIndex === pizza.id}"
-                 v-for="(pizza,index) in pizzas" :key="pizza.id">
+                 v-for="(pizza,index) in all_pizzas" :key="pizza.id">
               <div class="pizza-constructor__right--pizza__top" :style="`background: url(${pizza.image})`"></div>
               <div class="pizza-constructor__right--pizza__bottom">
                 <p>{{pizza.name}}</p>
-                <p>{{pizza.price}}р</p>
+                <p>{{pizza.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
               </div>
             </div>
 
@@ -81,83 +83,45 @@ export default {
       firstPizzaIndex:null,
       secondPizza:null,
       secondPizzaIndex:null,
+      items:this.$store.getters['products/getItems'],
 
-      pizzas:[
-        {id:1,name:'пицца1',price:1001,image:'/small_pz.png',ingridients:[
-            {id:1,name:'Ветчина'},
-            {id:2,name:'моцарелла'},
-            {id:3,name:'томатный соус'},
-            {id:4,name:'базилик'},
-            {id:5,name:'Ветчина'},
-
-          ]},
-        {id:2,name:'пицца2',price:1002,image:'/small_pz.png',ingridients:[
-            {id:1,name:'Ветчина'},
-            {id:2,name:'моцарелла'},
-            {id:3,name:'томатный соус'},
-            {id:4,name:'базилик'},
-            {id:5,name:'Ветчина'},
-            {id:6,name:'моцарелла'},
-
-          ]},
-        {id:3,name:'пицца3',price:1003,image:'/small_pz.png',ingridients:[
-            {id:1,name:'Ветчина'},
-            {id:2,name:'моцарелла'},
-            {id:3,name:'томатный соус'},
-            {id:4,name:'базилик'},
-          ]},
-        {id:4,name:'пицца4',price:1004,image:'/small_pz.png',ingridients:[
-            {id:4,name:'базилик'},
-            {id:5,name:'Ветчина'},
-            {id:6,name:'моцарелла'},
-            {id:7,name:'томатный соус'},
-          ]},
-        {id:5,name:'пицца5',price:1004,image:'/small_pz.png',ingridients:[
-            {id:4,name:'базилик'},
-            {id:5,name:'Ветчина'},
-            {id:6,name:'моцарелла'},
-            {id:7,name:'томатный соус'},
-          ]},
-        {id:6,name:'пицца6',price:1004,image:'/small_pz.png',ingridients:[
-            {id:4,name:'базилик'},
-            {id:5,name:'Ветчина'},
-            {id:6,name:'моцарелла'},
-            {id:7,name:'томатный соус'},
-          ]},
-        {id:7,name:'пицца7',price:1004,image:'/small_pz.png',ingridients:[
-            {id:4,name:'базилик'},
-            {id:5,name:'Ветчина'},
-            {id:6,name:'моцарелла'},
-            {id:7,name:'томатный соус'},
-          ]},
-      ]
     }
   },
   methods:{
-    selectPizzaPart(id,index){
+    async addToCart (){
+      await this.$axios.post('/api/cart/add_to_cart_constructor',{
+        session_id:this.$auth.$storage.getCookie('session_id'),
+        city_id:this.$auth.$storage.getCookie('city_id'),
+        firstPizza: this.firstPizza,
+        secondPizza: this.secondPizza,
+      })
+      await this.$store.dispatch('cart/fetchCart')
+      this.constructorModal = false
+    },
+    selectPizzaPart(pizza){
       if (this.firstPizzaIndex && this.secondPizzaIndex){
-        if (this.secondPizzaIndex === id){
+        if (this.secondPizzaIndex === pizza.id){
           this.secondPizzaIndex = null
           this.secondPizza = null
         }else{
-          this.firstPizzaIndex = id
+          this.firstPizzaIndex = pizza.id
           this.secondPizzaIndex = null
-          this.firstPizza = this.pizzas[index]
+          this.firstPizza = pizza
           this.secondPizza = null
         }
         return
       }
 
       if (!this.firstPizzaIndex && !this.secondPizzaIndex){
-        this.firstPizzaIndex = id
-        this.firstPizza = this.pizzas[index]
+        this.firstPizzaIndex = pizza.id
+        this.firstPizza = pizza
         return
       }
 
       if (this.firstPizzaIndex  && !this.secondPizzaIndex){
-        if (this.firstPizzaIndex !== id){
-          this.secondPizzaIndex = id
-          this.secondPizza = this.pizzas[index]
+        if (this.firstPizzaIndex !== pizza.id){
+          this.secondPizzaIndex = pizza.id
+          this.secondPizza = pizza
         }else {
           this.firstPizzaIndex = null
           this.firstPizza= null
@@ -173,10 +137,15 @@ export default {
     }
   },
   computed:{
+    all_pizzas (){
+      return this.$store.getters['products/getItems'].filter( x => x.category.is_pizza)
+    },
       pizzaPrice(){
 
         if (this.firstPizzaIndex && this.secondPizzaIndex){
-          return parseInt((this.firstPizza.price / 2) + (this.secondPizza.price / 2))
+          let firstPizzaPrice = this.firstPizza.prices.find(x => x.city === this.$auth.$storage.getCookie('city_id')).price
+          let secondPizzaPrice = this.secondPizza.prices.find(x => x.city === this.$auth.$storage.getCookie('city_id')).price
+          return parseInt((firstPizzaPrice / 2) + (secondPizzaPrice / 2))
         }else{
               return 0
         }

@@ -67,7 +67,12 @@
       cursor: pointer
       margin-right: 15px
     &-address
-      flex-grow: 1
+      flex-basis: 250px
+      &__link
+        cursor: pointer
+        display: inline-block
+        border-bottom: 1px dashed $default-text-color
+
     &-nav
       flex-grow: 2
       @extend .d-flex
@@ -82,15 +87,15 @@
       display: none
     &-mobile-toggle
       display: none
-
   &-bottom
     position: sticky
     @extend .d-flex
     padding: 5px 0
     &-menu
-      @extend .d-flex
+      display: grid
+      grid-template-columns: repeat(auto-fill,minmax(100px,100px))
       flex-grow: 2
-      p
+      &__item
         cursor: pointer
       a
         &:hover
@@ -109,16 +114,33 @@
           background: linear-gradient(270deg, #ffffff 0%, #ffffff59 100%)
           z-index: 10
     &-cart
+      position: relative
       flex-grow: 1
       @extend .d-flex
       justify-content: flex-end
-      p
+      &__inner
+        @extend .d-flex
+        justify-content: flex-end
+      &__summ
         background: rgba(203, 203, 203, 0.26)
         border-radius: 6px
         padding: 4px 12px
         margin-right: 5px
-      svg
+      &__icon
+        position: relative
         cursor: pointer
+        &-num
+          @extend .d-flex
+          justify-content: center
+          position: absolute
+          width: 20px
+          height: 20px
+          background: $primary-color
+          border-radius: 100%
+          right: -10px
+          top: -5px
+          color: #FFFFFF
+          font-size: 12px
 
 
 @media (max-width: 850px)
@@ -144,7 +166,7 @@
           &--overlay
             display: block
       &-cart
-        p
+        &__summ
           display: none
 @media (max-width: 768px)
   .header-bottom-menu__slider

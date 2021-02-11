@@ -1,8 +1,13 @@
 .item-card
   background: #FFFFFF
-  border: 1px solid #F0F0F0
+  border: 1px solid transparent
   box-sizing: border-box
   border-radius: 3px
+  box-shadow: 0px 48px 84px rgba(0, 0, 0, 0.04)
+  transition: all .2s linear
+  &:hover
+    box-shadow: none
+    border-color: #F0F0F0
   &__constructor
     position: relative
     &::after
@@ -58,3 +63,22 @@
       font-weight: bold
     & .el-button
       width: 185px
+  &__add
+    @extend .d-flex
+    margin-left: auto
+    margin-bottom: 10px
+    max-width: 185px
+    img
+      cursor: pointer
+      transition: all .2s ease-in-out
+      &:hover
+
+        transform: translateY(1px)
+    p
+      text-align: center
+      background: #F8F9FA
+      border-radius: 3px
+      flex-basis: 50%
+      padding: 5px 10px
+      color: $grey-color
+

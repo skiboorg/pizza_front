@@ -56,8 +56,8 @@
       </div>
 
     </footer>
-    <el-button id="itemModalBtn" style="display: none" @click="itemModal=true"></el-button>
-    <el-dialog class="item-modal" :visible.sync="itemModal">
+    <a style="display: none" href="#" id="pizzaModalBtn"  @click.prevent="pizzaModal=true"></a>
+    <el-dialog class="item-modal" :visible.sync="pizzaModal" @open="pizzaModalOpen" @closed="pizzaModalClosed">
       <div class="item-modal__header">
          <h3 class="item-modal__title">{{item.name}}</h3>
         <el-tooltip  placement="bottom-end" effect="light">
@@ -72,8 +72,10 @@
 
       <!--   item-modal__ingridient ingridientCanRemoved   ingridientRemoved-->
       <div class="item-modal__ingridients">
-        <div class="item-modal__ingridient" v-for="(ingridient,index) in item.indridients" :key="ingridient.id">
-          <p v-if="!ingridient.can_remove" >{{ingridient.name}}</p>
+        <div class="item-modal__ingridient"
+             v-for="(ingridient,index) in item.base_ingridients"
+             :key="ingridient.id">
+          <p v-if="!ingridient.is_can_removed" >{{ingridient.name}}</p>
           <p v-else @click="toggleIngridient(index)" class="ingridientCanRemoved" :class="{'ingridientRemoved':ingridient.is_removed}">
             <span>{{ingridient.name}}</span>
             <img v-if="!ingridient.is_removed" src="/ingridient-remove-icon.svg" alt="">
@@ -83,8 +85,9 @@
 
       </div>
       <div class="item-modal__sizes">
-        <el-radio v-model="selectedPizza.pizzaSize" :label="index" border v-for="(size,index) in item.sizes" :key="size.id">{{size.size}}</el-radio>
-        <p>{{item.sizes[selectedPizza.pizzaSize].weight}}</p>
+        <el-radio v-model="pizzaSize" :label="22" >22 см</el-radio>
+        <el-radio v-model="pizzaSize" :label="33" >33 см</el-radio>
+        <p>{{item.weight}} г</p>
       </div>
       <div class="item-modal__slider">
         <h3 class="item-modal__slider--title">Добавить ингредиенты</h3>
@@ -92,10 +95,11 @@
           <swiper ref="itemModalSlider" class="item-modal__slider--wrapper" :options="itemModalSliderOption">
 
             <swiper-slide v-for="(ingridient,index) in item.additional_ingridients" :key="ingridient.id">
-              <div @click="toggleAdditionIngridient(index)" class="item-modal__slider--item " :class="{'itemChecked':ingridient.is_checked}">
+              <div @click="toggleAdditionIngridient(index,ingridient.price.find(x => x.city === $auth.$storage.getCookie('city_id')).price)"
+                   class="item-modal__slider--item " :class="{'itemChecked':ingridient.is_added}">
                 <img :src="ingridient.image" alt="" data-not-lazy>
                 <p class="font-12">{{ingridient.name}}</p>
-                <p class="font-12 text-bold">{{ingridient.price}}р</p>
+                <p class="font-12 text-bold">{{ingridient.price.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
               </div>
             </swiper-slide>
 
@@ -106,7 +110,7 @@
         </client-only>
       </div>
       <div class="item-modal__summ"><p>Сумма</p><p class="color-primary">{{total_price}}р</p></div>
-      <el-button type="primary">В корзину</el-button>
+      <el-button @click="addToCart" :loading="is_loading" type="primary">В корзину</el-button>
     </el-dialog>
 
   </div>
@@ -117,17 +121,21 @@
 export default {
   data() {
     return {
-      itemModal:true,
-      selectedPizza:{
-        pizzaSize: 0,
-        base_price:0,
-        additional_price:0
-      },
+      pizzaModal:false,
+      meatModal:false,
+      is_pizza:false,
+      is_meat:false,
+      is_loading:false,
+      basePrice:0,
+      base_price:0,
+      pizzaSize: 22,
+      additional_price:0,
+
       navLinks:[
-        {id:1,url:'/',name:'Акции'},
-        {id:2,url:'/',name:'О нас'},
-        {id:3,url:'/',name:'Доставка и оплата'},
-        {id:4,url:'/',name:'Контакты'}
+        {id:1,url:'/promotions',name:'Акции'},
+        {id:2,url:'/about',name:'О нас'},
+        {id:3,url:'/delivery',name:'Доставка и оплата'},
+        {id:4,url:'/contacts',name:'Контакты'}
       ],
       footerLinks:[
         {id:1,url:'/policy',name:'Политика конфиденциальности'},
@@ -169,59 +177,74 @@ export default {
         //
         // }
       },
-      item:{
-        name:'Ветчина и сыр',
-        weight: '500 г',
-        price:200,
-        callories:'300/14/20/70',
-        sizes:[
-          {id:1,price:100,size:'28 см',weight:'500 г'},
-          {id:2,price:200,size:'33 см',weight:'600 г'},
-        ],
-        indridients:[
-          {id:1,can_remove:false,name:'Ветчина1', is_removed:false},
-          {id:2,can_remove:true,name:'Ветчина2', is_removed:false},
-          {id:3,can_remove:false,name:'Ветчина3', is_removed:false},
-          {id:4,can_remove:true,name:'Ветчина4', is_removed:false},
-        ]
-        ,additional_ingridients:[
-          {id:1,name:'Ветчина',image:'/meat.png',price:10, is_checked:false},
-          {id:2,name:'Ветчина1',image:'/meat.png',price:20, is_checked:false},
-          {id:3,name:'Ветчина2',image:'/meat.png',price:30, is_checked:false},
-          {id:4,name:'Ветчина3',image:'/meat.png',price:40, is_checked:false},
-          {id:5,name:'Ветчина5',image:'/meat.png',price:50, is_checked:false},
-          {id:6,name:'Ветчина6',image:'/meat.png',price:60, is_checked:false},
-          {id:7,name:'Ветчина7',image:'/meat.png',price:70, is_checked:false},
-          {id:8,name:'Ветчина8',image:'/meat.png',price:80, is_checked:false},
-        ]
-      }
+      item:{},
+
     };
   },
   watch: {
+    pizzaSize: function (val){
+      val === 22 ? this.base_price = this.basePrice : this.base_price = parseInt(this.base_price * 1.2)
+    }
   },
   mounted() {
+
   },
   methods: {
-    toggleIngridient (index) {
-      this.item.indridients[index].is_removed = !this.item.indridients[index].is_removed
-    },
-    toggleAdditionIngridient (index) {
-      if(!this.item.additional_ingridients[index].is_checked){
-        this.item.additional_ingridients[index].is_checked = true
-        this.selectedPizza.additional_price += this.item.additional_ingridients[index].price
-      }else{
-        this.item.additional_ingridients[index].is_checked = false
-        this.selectedPizza.additional_price -= this.item.additional_ingridients[index].price
-      }
+    async addToCart () {
+      this.is_loading=true
+      await this.$axios.post(`/api/cart/add_to_cart`,
+        {
+          session_id:this.$auth.$storage.getCookie('session_id'),
+          item:this.item,
+          selected_size:this.is_pizza ? this.pizzaSize: 0,
+          weight:0,
+          units:1,
+          city_id:this.$auth.$storage.getCookie('city_id'),
+          is_meat:this.is_meat
 
+        })
+      await this.$store.dispatch('cart/fetchCart')
+      this.pizzaModal = false
+    },
+    pizzaModalClosed () {
+      this.basePrice=0
+      this.base_price=0
+      this.pizzaSize=22
+      this.additional_price=0
+      this.is_loading=false
+    },
+    async pizzaModalOpen () {
+      const responce = await this.$axios(`/api/items/get_item_by_id/${this.$store.getters['products/getOpenedPizza']}`)
+      this.item = responce.data
+      this.is_pizza = true
+      this.basePrice = this.base_price = this.item.prices.find(x => x.city === this.$auth.$storage.getCookie('city_id')).price
+
+    },
+    async meatModalOpen () {
+      console.log(this.$store.getters['products/getOpenedMeat'])
+      const responce = await this.$axios(`/api/items/get_item_by_id/${this.$store.getters['products/getOpenedMeat']}`)
+      this.item = responce.data
+      this.is_meat = true
+      this.basePrice = this.base_price = this.item.prices.find(x => x.city === this.$auth.$storage.getCookie('city_id')).price
+      console.log('MEAT MODAL SHOW',responce.data)
+    },
+    toggleIngridient (index) {
+      this.item.base_ingridients[index].is_removed = !this.item.base_ingridients[index].is_removed
+    },
+    toggleAdditionIngridient (index,price) {
+      if(!this.item.additional_ingridients[index].is_added){
+        this.item.additional_ingridients[index].is_added = true
+        this.additional_price += price
+      }else{
+        this.item.additional_ingridients[index].is_added = false
+        this.additional_price -= price
+      }
     }
   },
   computed:{
-    base_price(){
-      return this.item.sizes[this.selectedPizza.pizzaSize].price
-    },
+
     total_price(){
-      return this.base_price + this.selectedPizza.additional_price
+      return this.base_price + this.additional_price
     }
   }
 }

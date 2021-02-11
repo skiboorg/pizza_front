@@ -72,17 +72,40 @@
         <div class="about-page-block__text">
           <h3>8. Повара высшей категории</h3>
           <p>Для вас готовят профессиональные повара, с широкой рецептурной базой и любовью к своему делу.</p>
+          <div class="about-page-block__faces">
+            <div class="about-page-block__face">
+              <img src="/aboutPage/p1.jpg" alt="">
+              <div class="about-page-block__face--name">
+                <p class="about-page-block__face--name-name">Имя</p>
+                <p class="about-page-block__face--name-work">Повар</p>
+              </div>
+            </div>
+             <div class="about-page-block__face">
+              <img src="/aboutPage/p2.jpg" alt="">
+                <div class="about-page-block__face--name">
+                <p class="about-page-block__face--name-name">Имя</p>
+                <p class="about-page-block__face--name-work">Повар</p>
+              </div>
+            </div>
+             <div class="about-page-block__face">
+              <img src="/aboutPage/p3.jpg" alt="">
+                <div class="about-page-block__face--name">
+                <p class="about-page-block__face--name-name">Имя</p>
+                <p class="about-page-block__face--name-work">Повар</p>
+              </div>
+            </div>
+          </div>
 
         </div>
         <div class="about-page-block__img">
-          <img src="/aboutPage/4.jpg" alt="">
+          <img src="/aboutPage/5.jpg" alt="">
         </div>
       </div>
       <div class="about-page-block image-first">
         <div class="about-page-block__img">
 
 
-          <img src="/aboutPage/5.jpg" alt="">
+          <img src="/aboutPage/6.jpg" alt="">
         </div>
         <div class="about-page-block__text">
           <h3>9. Уютное кафе</h3>
@@ -99,7 +122,7 @@
         </div>
 
       </div>
-      <Map />
+      <Map id="contacts" />
     </div>
   </div>
 </template>
@@ -107,6 +130,10 @@
 <script>
 import Map from '@/components/global/Map'
 export default {
+  async fetch({store}){
+    await store.dispatch('city/fetchCity')
+    await store.dispatch('cart/fetchCart')
+  },
   scrollToTop: true,
   components:{
     Map

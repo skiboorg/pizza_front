@@ -63,12 +63,12 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // '@nuxtjs/auth',
+    '@nuxtjs/auth',
     'nuxt-lazy-load'
   ],
-  router: {
-    // middleware: ['auth']
-  },
+  // router: {
+  //    middleware: ['auth']
+  // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -80,25 +80,25 @@ export default {
   build: {
     transpile: [/^element-ui/],
   },
-  // auth: {
-  //   redirect: {
-  //     login: '/',
-  //     logout: '/',
-  //     callback: '/',
-  //     home: '/'
-  //   },
-  //   strategies: {
-  //     local: {
-  //       endpoints: {
-  //         login: { url: '/auth/token/login/', method: 'post', propertyName: 'auth_token' },
-  //         logout: { url: '/auth/token/logout/', method: 'post' },
-  //         user: { url: '/api/v1/user/me/', method: 'get', propertyName: false }
-  //       },
-  //       // tokenRequired: true,
-  //       tokenType: 'Token',
-  //       // globalToken: true,
-  //       //autoFetchUser: false
-  //     }
-  //   }
-  // }
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/',
+      home: '/'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/auth/token/login/', method: 'post', propertyName: 'auth_token' },
+          logout: { url: '/auth/token/logout/', method: 'post' },
+          user: { url: '/api/user/me/', method: 'get', propertyName: false }
+        },
+        // tokenRequired: true,
+        tokenType: 'Token',
+        // globalToken: true,
+        //autoFetchUser: false
+      }
+    }
+  }
 }

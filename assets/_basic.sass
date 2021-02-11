@@ -2,6 +2,8 @@ $default-text-color: #262626
 $no-info-text-color: #72879F
 $primary-color: #DA3511
 $primary-gradient: linear-gradient(89.85deg, #E73A14 5.28%, #EA3C24 99.83%)
+$primary-gradient-hover: linear-gradient(89.85deg, #DA3511 5.28%, #EA3C24 99.83%)
+$primary-gradient-active: linear-gradient(89.85deg, #D92B05 5.28%, #D92B05 99.83%)
 $grey-color: #AEAEAE
 
 body
@@ -83,7 +85,74 @@ body
 
 .mb-60
   margin-bottom: 60px !important
+.isDisabled
+  opacity: .8
+  pointer-events: none
+  user-select: none
 
+.el-date-table td.available:hover
+  color: $primary-color
+.el-date-table td.today span
+  color: $primary-color
+.el-date-table td.current:not(.disabled) span
+  background-color: $primary-color
+.el-year-table td .cell:hover, .el-year-table td.current:not(.disabled) .cell
+  color: $primary-color
+.el-date-picker__header-label.active, .el-date-picker__header-label:hover
+  color: $primary-color
+.el-month-table td.current:not(.disabled) .cell
+  color: $primary-color
+.time-select-item.selected:not(.disabled)
+  color: $primary-color
+.el-picker-panel__icon-btn:hover
+  color: $primary-color
+
+
+
+.el-textarea
+  &__inner
+    border: none
+    background: #F8F9FA
+    border-radius: 3px
+    resize: none
+.el-radio.is-bordered+.el-radio.is-bordered
+  margin-left: 0
+.el-radio.is-bordered
+  border: none
+  padding: 0
+  display: block
+  margin-left: 0
+.el-radio.is-bordered.is-checked
+  border-color: $primary-color
+.el-radio__input.is-checked+.el-radio__label
+  color: $primary-color
+.el-radio__input.is-checked .el-radio__inner
+  color: $primary-color
+  border-color: $primary-color
+  background: $primary-color
+.el-radio__inner
+  width: 30px
+  height: 30px
+  &:hover
+    border-color: $primary-color
+  &::after
+    width: 13px
+    height: 13px
+.el-radio-button
+  &:first-child
+    & .el-radio-button__inner
+        border-color: $primary-color
+  &__inner
+    color: $primary-color
+    border-color: $primary-color
+    &:hover
+      color: $primary-color
+
+
+.el-radio-button__orig-radio:checked+.el-radio-button__inner
+  background-color: $primary-color
+  border-color: $primary-color
+  box-shadow: -1px 0 0 0 $primary-color
 .el-popup-parent--hidden
   //overflow: hidden //auto
   padding-right: 0 !important
@@ -91,34 +160,52 @@ body
   position: relative !important
   padding-left: 0px
   //padding-top: 0px
-  padding-right: 0px
+
   margin-left: 0
   margin-top: 0
   margin-right: 15px !important
+  & .header
+    right: 7px
+
+.el-checkbox__input.is-checked .el-checkbox__inner
+  border-color: $primary-color
+.el-checkbox__inner
+  &:active
+    border-color: $primary-color
+  &:focus
+    border-color: $primary-color
+  &:hover
+    border-color: $primary-color
+.el-checkbox__input.is-checked+.el-checkbox__label
+  color: $primary-color
+.el-checkbox__input.is-checked .el-checkbox__inner
+  background-color: $primary-color
+  border-color: $primary-color
 .el-button
   height: 47px
-  font-family: 'Montserrat', sans-serif
+
   &--primary
     border-color: $primary-color
-    background: $primary-color
+    background: $primary-gradient
     color: #ffffff
     &:focus
       border-color: $primary-color
-      background: #D92B05
+      background: $primary-gradient-active
 
     &:hover
       border-color: $primary-color
-      background: #DA3511
+      background: $primary-gradient-hover
 
     &:active
       border-color: $primary-color
-      background: #D92B05
+      background: $primary-gradient-active
     &.is-disabled
-      background: #DA3511
-      opacity: .6
+      border-color: $primary-color
+      background: $primary-gradient
+      opacity: .8
       &:hover
         border-color: $primary-color
-        background: #DA3511
+        background: $primary-gradient
 
   &.is-plain
     border-color: $primary-color
@@ -163,6 +250,12 @@ body
     &__headerbtn .el-dialog__close
       color: $default-text-color
       font-size: 22px
+.cityModal
+  & .el-dialog
+    padding: 20px 40px
+    max-width: 300px
+    &__header
+      padding: 0
 
 .modal
   &-title
@@ -176,6 +269,24 @@ body
     color: $default-text-color
     line-height: 24px
     word-break: break-word
+  &-cities
+    display: flex
+    flex-direction: column
+    align-items: center
+  &-city
+    display: inline-block
+    margin-bottom: 15px
+    text-align: center
+    cursor: pointer
+    color: $default-text-color
+    border-bottom: 1px dashed transparent
+    transition: all .2s linear
+    &:last-child
+      margin-bottom: 0
+    &:hover
+      border-color: $default-text-color
+  &-group
+    @extend .d-flex
   &-text
     text-align: center
     margin-bottom: 10px

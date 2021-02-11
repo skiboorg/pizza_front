@@ -1,0 +1,159 @@
+.checkout
+  &__new-order
+    height: 100vh
+
+  &-map
+    height: 387px
+    margin-bottom: 20px
+  &-container
+    max-width: 1080px
+    padding: 0 10px
+    margin: 0 auto
+  &-wrapper
+    margin-bottom: 100px
+    @extend .d-flex
+    align-items: flex-start
+  &-left
+    flex-basis: 35%
+    & .el-button
+      width: 290px
+      margin-bottom: 20px
+  &-right
+    flex-basis: 42%
+  &-form
+    margin-bottom: 30px
+    &__group
+      display: grid
+      grid-gap: 10px
+      margin-bottom: 10px
+      &.group-3-1
+        grid-template-columns: 3fr 1fr
+      &.group-4
+        grid-template-columns: repeat(4,1fr)
+      &.group-2
+        grid-template-columns: repeat(2,1fr)
+  &__payment
+    margin-bottom: 45px
+
+  &__cashback
+    @extend .d-flex
+    padding-left: 40px
+    margin-bottom: 20px
+    p
+      width: 220px
+    & .el-input
+        width: 100px
+        margin-right: 20px
+    &.hidden
+      display: none
+  &-cart
+    background: #FFFFFF
+    box-shadow: 0px 100px 80px rgba(21, 29, 42, 0.07), 0px 41.7776px 33.4221px rgba(21, 29, 42, 0.0461267), 0px 22.3363px 17.869px rgba(21, 29, 42, 0.0348335), 0px 12.5216px 10.0172px rgba(21, 29, 42, 0.026166), 0px 6.6501px 5.32008px rgba(21, 29, 42, 0.0182308), 0px 2.76726px 2.21381px rgba(21, 29, 42, 0.00992385)
+    border-radius: 5px
+    padding: 30px 20px
+    &__change
+      @extend .d-flex
+      margin-bottom: 20px
+      cursor: pointer
+      p
+        color: $grey-color
+    &__row
+      @extend .d-flex
+      margin-bottom: 15px
+      &:last-child
+        margin-bottom: 0
+    & .cart-items
+      margin-bottom: 20px
+    & .cart-item
+      position: relative
+      @extend .d-flex
+      align-items: flex-start
+      border-bottom: 1px solid #E9E9E9
+      margin-bottom: 10px
+      padding-bottom: 10px
+      &:last-child
+        margin-bottom: 0
+      &__constructor
+        margin-bottom: 20px
+        //& .cart-item__info--name
+        //  font-size: 14px
+        //& .cart-item__info--text
+        //  margin-bottom: 0
+        &--img
+          position: relative
+          min-width: 118px
+          min-height: 84px
+          margin-right: 10px
+          &-first
+            position: absolute
+            width: 59px
+            left: 0
+            top: 0
+            bottom: 0
+            background-position-y: center !important
+            background-size: cover !important
+          &-second
+            position: absolute
+            width: 59px
+            right: 0
+            top: 0
+            bottom: 0
+            background-position-y: center !important
+            background-size: cover !important
+
+      img
+        min-width: 118px
+        height: 84px
+        object-fit: cover
+        margin-right: 10px
+      &__remove
+        position: absolute
+        right: 0
+        top: 0
+        cursor: pointer
+      &__info
+        //flex-grow: 1
+        flex-basis: 75%
+        display: block
+        height: unset
+        &--name
+          font-weight: normal
+          font-size: 16px
+
+        &--text
+          color: $grey-color
+          margin-bottom: 10px
+        &--add
+          @extend .d-flex
+          justify-content: flex-start
+          img
+            min-width: 30px
+            height: 30px
+            user-select: none
+            cursor: pointer
+            margin-right: 10px
+          p
+            font-family: 'Montserrat', sans-serif
+            margin-right: 10px
+            user-select: none
+      &__price
+        text-align: right
+        margin-top: auto
+        flex-basis: 25%
+        &--bonus
+          font-size: 12px
+        &--summ
+          font-weight: 700
+    &__clear
+      margin-bottom: 10px
+    &__title
+      margin-bottom: 5px
+    &__add
+      &-block
+        margin-bottom: 10px
+
+
+
+
+
+

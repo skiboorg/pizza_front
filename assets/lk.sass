@@ -25,25 +25,7 @@
     margin-bottom: 20px
   &-new-address
     position: relative
-    & .el-input
-      opacity: 0
-      pointer-events: none
-      transition: opacity .3s linear
-      width: 64%
-    & .el-button
-      position: absolute
-      left: 0
-      right: 100%
-      transition: all .2s linear
-    &.newAddressActive
-      & .el-input
-        opacity: 1
-        pointer-events: all
-      & .el-button
-        left: 100%
-        transform: translateX(-100%)
-        right: 0
-
+    max-width: 500px
   &-tab-row
     display: grid
     align-items: center
@@ -59,6 +41,7 @@
         color: #AEAEAE
         font-size: 22px
         cursor: pointer
+
 
 
 

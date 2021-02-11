@@ -1,11 +1,11 @@
 <template>
   <div class="item-card">
     <div class="item-card__top">
-      <img src="/ph.png" alt="">
+      <img :src="item.image" alt="">
     </div>
     <div class="item-card__bottom">
       <div class="item-card__title">
-        <p>Шашлык</p>
+        <p>{{item.name}}</p>
         <el-tooltip  placement="top-end" effect="light">
           <div class="item-card__title--info-tooltip" slot="content"><p>К/Б/Ж/У</p><span>300/14/20/70</span></div>
           <el-button class="item-card__title--info-btn" type="text"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,14 +16,19 @@
         </el-tooltip>
       </div>
       <p class="item-card__ingridients">
-        <span>Лаваш</span>
-        <span>соус белый</span>
-        <span>соус красный </span>
-        <span>лук</span>
+        <span v-for="ingridient in item.base_ingridients" :key="ingridient.id">{{ingridient.name}}</span>
+
       </p>
+      <div v-if="!item.category.is_pizza" class="item-card__add">
+            <img @click="minusUnit" src="/round-minus.svg" alt="">
+            <p>{{total_units}} {{unit_name}}</p>
+            <img @click="plusUnit" src="/round-plus.svg" alt="">
+          </div>
       <div class="item-card__price">
-        <p>1000р</p>
-        <el-button type="primary" @click="openModal">Выбрать</el-button>
+        <p>{{item.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
+        <el-button v-if="item.category.is_pizza" type="primary" @click="openModalPizza(item.id)">Выбрать</el-button>
+<!--        <el-button v-else-if="item.category.is_meat" type="primary" @click="openModalMeat(item.id)">Выбрать meat</el-button>-->
+        <el-button :loading="is_loading" v-else type="primary" @click="addToCart(item)">В корзину</el-button>
       </div>
     </div>
   </div>
@@ -33,15 +38,49 @@
 
 export default {
 
-  props:['title'],
+  props:['item'],
   data() {
     return {
+      base_price:0,
+      min_unit:this.item.min_unit,
+      unit_name:this.item.unit_name,
+      units:1,
+      is_loading:false
+
 
     };
   },
   methods:{
-    openModal(){
-      document.getElementById('itemModalBtn').click()
+    plusUnit (){
+      this.units += 1
+    },
+    minusUnit (){
+      this.units > 1 ? this.units -= 1 : this.units = 1
+    },
+    openModalPizza(id){
+      this.$store.dispatch('products/changeOpenedPizza',id)
+      document.getElementById('pizzaModalBtn').click()
+    },
+    async addToCart (item) {
+      this.is_loading = true
+      await this.$axios.post(`/api/cart/add_to_cart`,
+        {
+          session_id:this.$auth.$storage.getCookie('session_id'),
+          item:item,
+          selected_size:0,
+          weight:0,
+          units:this.units,
+          city_id:this.$auth.$storage.getCookie('city_id'),
+          is_meat: item.category.is_meat
+        })
+      await this.$store.dispatch('cart/fetchCart')
+      this.is_loading = false
+    },
+
+  },
+  computed:{
+    total_units(){
+      return this.min_unit * this.units
     }
   }
 }

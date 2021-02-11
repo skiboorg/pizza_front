@@ -1,0 +1,32 @@
+.delivery-page
+  margin-bottom: 130px
+  h3
+    font-family: 'Raleway',sans-serif
+    font-size: 40px
+    font-weight: 900
+    margin-bottom: 50px
+    line-height: 48px
+    text-align: center
+  &__payments
+    @extend .d-flex
+    justify-content: space-evenly
+    margin-bottom: 140px
+  &__time
+    margin-bottom: 180px
+
+.promotions
+  display: grid
+  grid-template-columns: repeat(auto-fill,minmax(410px,1fr))
+  grid-column-gap: 30px
+  grid-row-gap: 40px
+.promotion
+  &__img
+    margin-bottom: 20px
+  &__title
+    font-weight: 700
+    font-size: 20px
+    margin-bottom: 15px
+  &__text
+    margin-bottom: 20px
+  & .el-button
+    width: 250px

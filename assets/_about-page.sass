@@ -58,7 +58,7 @@
       position: relative
       &--decor
         position: absolute
-        right: 30px
+        right: 80px
         top: 0
     &__phone
       @extend .d-flex
@@ -86,6 +86,28 @@
         height: 174px
         object-fit: cover
         border-radius: 3px
+    &__faces
+      display: grid
+      grid-template-columns: repeat(3,1fr)
+      grid-gap: 10px
+    &__face
+      position: relative
+      &--name
+        position: absolute
+        background: #FFFFFF
+        box-shadow: 0px 4px 41px rgba(0, 0, 0, 0.12)
+        border-radius: 3px
+        left: 10px
+        right: 10px
+        bottom: 10px
+        padding: 10px 0
+        text-align: center
+        img
+          padding-bottom: 34px
+        &-name
+          font-weight: 700
+          margin-bottom: 0px !important
+        &-work
 
 @media (max-width: 850px)
   .about-page
