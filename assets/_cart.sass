@@ -301,11 +301,7 @@
   &-souse
     &__slider
       //height: 115px
-
       &-item
-
-
-
         background: #FFFFFF
         border-radius: 3px
         cursor: pointer
@@ -325,3 +321,54 @@
         top: 35px
         &::after
           content: url(/left-arrow.svg)
+
+@media (max-width: 768px)
+  .cart
+    &-container
+      margin: -35px 0 0 0
+    &.cartHeader
+      width: 350px
+      & .cart
+        &-items
+          max-height: 280px
+        &__wrapper
+          padding: 0 5px 30px 5px
+        &-item
+          img
+            min-width: 80px
+            height: 45px
+          &__info
+            &--name
+              font-size: 14px
+            &--text
+              font-size: 12px
+            &--add
+              img
+                min-width: 20px
+                height: 20px
+                object-fit: contain
+          &__price
+            flex-basis: 35%
+        &__clear
+          p
+            font-size: 14px
+        &__title
+          font-size: 16px
+    &-item
+      img
+        min-width: 115px
+        height: 85px
+      &__info
+        height: fit-content
+        &--name
+          font-size: 14px
+        &--text
+          font-size: 12px
+        &--add
+          img
+            min-width: 20px
+            height: 20px
+            object-fit: contain
+      &__price
+          flex-basis: 35%
+

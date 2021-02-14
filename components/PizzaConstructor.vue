@@ -23,7 +23,8 @@
 
         <div class="pizza-constructor__left">
           <div class="pizza-constructor__left--title">Выберите  половинки пицц</div>
-          <div class="pizza-constructor__left--pizza " :class="{'pizzaDisabled':!firstPizza}">
+          <div class="pizza-constructor__left--pizza-wrapper">
+            <div class="pizza-constructor__left--pizza " :class="{'pizzaDisabled':!firstPizza}">
             <h3>Первая половина</h3>
             <div v-if="!firstPizza"><p>Выберите пиццу</p> </div>
             <div v-else>
@@ -32,7 +33,7 @@
             </div>
 
           </div>
-          <div class="pizza-constructor__left--pizza " :class="{'pizzaDisabled':!secondPizza}">
+           <div class="pizza-constructor__left--pizza " :class="{'pizzaDisabled':!secondPizza}">
             <h3>Вторая половина</h3>
             <div v-if="!secondPizza"><p>Выберите пиццу</p> </div>
             <div v-else>
@@ -40,6 +41,8 @@
               <span v-for="ingridient in secondPizza.base_ingridients" :key="ingridient.id">{{ingridient.name}}</span>
             </div>
           </div>
+          </div>
+
           <div class="pizza-constructor__left--bottom">
             <div class="pizza-constructor__left--price">
             <p>Сумма</p>
@@ -65,6 +68,14 @@
 
           </div>
         </div>
+        <div class="pizza-constructor__left--bottom--mobile">
+            <div class="pizza-constructor__left--price">
+            <p>Сумма</p>
+            <p v-if="pizzaPrice>0">{{pizzaPrice}}р</p>
+            <p v-else><i class="el-icon-loading"></i></p>
+          </div>
+          <el-button @click="addToCart" :disabled="!firstPizzaIndex || !secondPizzaIndex" type="primary">Выбрать</el-button>
+          </div>
       </div>
     </el-dialog>
   </div>

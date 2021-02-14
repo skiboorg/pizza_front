@@ -6,6 +6,7 @@
   background: #ffffff
   z-index: 110
   transition: all .2s linear
+  //box-shadow: rgba(6, 5, 50, 0.1) 0px 4px 30px
   &.halfHeader
     top: -133px
     box-shadow: rgba(6, 5, 50, 0.1) 0px 4px 30px
@@ -169,8 +170,17 @@
         &__summ
           display: none
 @media (max-width: 768px)
-  .header-bottom-menu__slider
-    width: 600px
+  .header
+    &-top
+      padding: 20px 0 0 0
+      &-logo
+        margin-right: 0
+    &-bottom
+      padding: 8px 5px 5px 0
+      &-menu__slider
+        width: 600px
+  &.halfHeader
+    top: -94px !important
 
 @media (max-width: 500px)
   .header-bottom-menu__slider

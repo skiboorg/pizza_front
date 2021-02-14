@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <header class="header" :class="{'halfHeader': isHomePage && scrollPosition > 160}">
+    <header class="header" :class="{'halfHeader':  scrollPosition > 80}">
       <div class="container">
         <div class="header-top">
           <div @click="$router.push('/')" class="header-top-logo">
@@ -59,6 +59,10 @@
 
             </div>
             <div class="header-mobile-menu__wrapper">
+
+            <span>Ваш город: <p @click="currentCityIsOK=false, cityModal=true" class="header-top-address__link">{{currentCity.name}}</p></span>
+            <p>{{currentCity.info}}</p><br>
+
               <a v-if="!this.$auth.loggedIn" href="#" @click.prevent="authModal=true">Войти</a>
               <nuxt-link v-else to="/lk">ЛК</nuxt-link>
               <nuxt-link to="/">Главная</nuxt-link>
@@ -101,10 +105,21 @@
             <div class="header-bottom-menu__slider--overlay"></div>
             <client-only>
               <swiper class="header-bottom-menu__slider"  :options="sliderMenuOption">
-                <swiper-slide v-for="item in menuItems"
+                <swiper-slide v-for="item in categories"
                               :key="item.id">
-                  <p v-if="!item.url">{{item.name}}</p>
-                  <p v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
+                  <span v-if="isHomePage">
+                <p  v-if="!item.url"><a @click="currentCatAnchor=item.id"
+                                        :class="{'color-primary':currentCatAnchor===item.id}"
+                                        href="#" v-scroll-to="`#catID_${item.id}`">{{item.name}}</a> </p>
+                <p  v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
+              </span>
+                  <span v-else>
+                <p  v-if="!item.url"><nuxt-link  :to="`/#catID_${item.id}`">{{item.name}}</nuxt-link></p>
+                <p  v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
+              </span>
+                </swiper-slide>
+                <swiper-slide>
+                  <p><nuxt-link to="/promotions">Акции</nuxt-link> </p>
                 </swiper-slide>
               </swiper>
             </client-only>
@@ -127,13 +142,15 @@
           </div>
           <!--          {{$store.getters['cart/getCart']}}-->
           <div class="header-bottom-cart">
-            <div  class="header-bottom-cart__inner" @mouseover="cartHeaderActive=true" @mouseleave="cartHeaderActive=false">
+            <div  class="header-bottom-cart__inner"
+                  @mouseover="cartHeaderActive=true"
+                  @mouseleave="cartHeaderActive=false">
               <p class="header-bottom-cart__summ">{{this.$store.getters['cart/getCart'].total_price}}р</p>
               <div class="header-bottom-cart__icon" >
                 <div v-if="items_in_cart > 0" class="header-bottom-cart__icon-num">
                   {{items_in_cart}}
                 </div>
-                <img @click="$router.push('/cart')" src="/cart-icon.svg" alt="" data-not-lazy>
+                <img  src="/cart-icon.svg" alt="" data-not-lazy>
               </div>
               <Cart :recommended_items_count="2" :souses_items_count="4" :cartHeader="true" :cartHeaderActive="cartHeaderActive"/>
             </div>
@@ -242,17 +259,6 @@ export default {
         {id:4,url:'/contacts',name:'Контакты'}
       ],
       categories:null,
-      menuItems:[
-        {id:1,name:'Шашлык',url:null},
-        {id:2,name:'Пицца',url:null},
-        {id:3,name:'Роллы',url:null},
-        {id:4,name:'Шаурма',url:null},
-        {id:5,name:'Пироги',url:null},
-        {id:6,name:'Закуски',url:null},
-        {id:7,name:'Напитки',url:null},
-        {id:8,name:'Рыба',url:null},
-        {id:9,name:'Акции',url:'/about'},
-      ],
       sliderMenuOption: {
         //slidesPerView: 3,
         //spaceBetween: 20,

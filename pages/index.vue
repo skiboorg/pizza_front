@@ -17,16 +17,16 @@
       <client-only>
         <swiper ref="homeTopSlider" :options="sliderHomeTopOption">
 
-          <swiper-slide >
+          <swiper-slide class="home-page-slider__item">
+            <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
+          </swiper-slide >
+          <swiper-slide class="home-page-slider__item">
             <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
           </swiper-slide>
-          <swiper-slide >
+          <swiper-slide class="home-page-slider__item">
             <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
           </swiper-slide>
-          <swiper-slide >
-            <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
-          </swiper-slide>
-          <swiper-slide >
+          <swiper-slide class="home-page-slider__item">
             <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
@@ -82,10 +82,10 @@ export default {
       // ],
       sliderHomeTopOption: {
 
-        slidesPerView: 2,
+        //slidesPerView: 2,
         spaceBetween: 10,
         loop:true,
-        centeredSlides: true,
+        //centeredSlides: true,
         pagination: {
           el: '.swiper-pagination',
           dynamicBullets: true
@@ -98,21 +98,23 @@ export default {
           delay: 3000,
         },
 
-        // breakpoints: {
-        //   // when window width is >= 320px
-        //   320: {
-        //
-        //     slidesPerView: 3,
-        //     spaceBetween: 50
-        //   },
-        //   // when window width is >= 480px
-        //   480: {
-        //     slidesPerView: 5,
-        //     //spaceBetween: 30
-        //   },
-        //   // when window width is >= 640px
-        //
-        // }
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            centeredSlides: true,
+            slidesPerView: 1,
+            spaceBetween: 10,
+            loop:false,
+          },
+          // when window width is >= 480px
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+            centeredSlides: true,
+          },
+          // when window width is >= 640px
+
+        }
       },
     };
   },

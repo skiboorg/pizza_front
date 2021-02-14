@@ -1,5 +1,4 @@
 .home-page
-
   &-slider
     position: relative
     margin-bottom: 130px
@@ -41,11 +40,7 @@
         &:hover
           svg
             left: 50px
-
-
-
   &-category
-
     margin-bottom: 130px
     &__title
       font-family: 'Raleway',sans-serif
@@ -58,3 +53,19 @@
       grid-column-gap: 30px
       grid-row-gap: 30px
 
+@media (max-width: 768px)
+  .home-page
+    &-category
+      margin-bottom: 60px
+      &__title
+        margin-bottom: 30px
+        font-size: 23px
+      &__items
+        display: block
+    &-slider
+      margin-bottom: 60px
+      //&__item
+      //  img
+      //    width: 240px
+      //    height: 125px
+      //    object-fit: cover

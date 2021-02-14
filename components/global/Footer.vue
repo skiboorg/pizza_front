@@ -156,26 +156,26 @@ export default {
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
-        }
+        },
         // ,autoplay: {
         //   delay: 3000,
         // },
 
-        // breakpoints: {
-        //   // when window width is >= 320px
-        //   320: {
-        //
-        //     slidesPerView: 3,
-        //     spaceBetween: 50
-        //   },
-        //   // when window width is >= 480px
-        //   480: {
-        //     slidesPerView: 5,
-        //     //spaceBetween: 30
-        //   },
-        //   // when window width is >= 640px
-        //
-        // }
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+
+            slidesPerView: 3,
+            spaceBetween: 10
+          },
+          // when window width is >= 480px
+          768: {
+            slidesPerView: 7,
+            //spaceBetween: 30
+          },
+          // when window width is >= 640px
+
+        }
       },
       item:{},
 

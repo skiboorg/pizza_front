@@ -29,6 +29,9 @@ export const mutations = {
 }
 
 export const actions = {
+  nuxtServerInit ({ commit }, { req }) {
+   console.log('cart sever init')
+  },
   async fetchCart({commit,state,dispatch}){
      let session_id = this.$auth.$storage.getCookie('session_id')
     console.log('session_id', session_id)
