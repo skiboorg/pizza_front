@@ -30,12 +30,15 @@
                     placeholder="Комментарий к заказу" v-model="orderData.comment"></el-input>
         </div>
         <div v-else class="checkout-form">
-          <h3 class="font-20 text-bold mb-10" >Адрес кафе</h3>
+          <h3 class="font-20 text-bold mb-10">Адрес кафе</h3>
           <p class="mb-20">{{currentCity.address}}</p>
+          <el-radio-group v-model="orderData.cafe_address" class="mb-30">
+          <el-radio :label="address.address" v-for="address in currentCity.adresses"></el-radio>
+        </el-radio-group>
           <div class="checkout-map">
                <client-only>
         <yandex-map
-          :coords="currentCity.coordinates.split(',')"
+          :coords="coordinates"
           class="mb-35"
           :class="'ymapContanerHidden'"
           zoom="14"
@@ -46,7 +49,7 @@
           <ymap-marker
             markerId="1"
             marker-type="Placemark"
-            :coords="currentCity.coordinates.split(',')">
+            :coords="coordinates">
           </ymap-marker>
         </yandex-map>
       </client-only>
@@ -212,6 +215,7 @@ export default {
       currentCity:{},
       orderData:{
         delivery_type:'Курьером',
+        cafe_address:null,
         payment:'cash',
         need_callback:false,
         no_cashback:true,
@@ -241,6 +245,8 @@ export default {
   },
   mounted() {
   this.currentCity = this.$store.getters['city/getCity'].find(x => x.id === this.$auth.$storage.getCookie('city_id'))
+    this.orderData.cafe_address = this.currentCity.adresses[0].address
+
   },
   methods: {
     async createOrder(){
@@ -253,6 +259,10 @@ export default {
         })
       console.log(response.data)
       await this.$store.dispatch('cart/fetchCart')
+      if (response.data.formUrl){
+        console.log('redirect ',response.data.formUrl)
+        window.location.href = response.data.formUrl
+      }
       this.orderCode = response.data.code
       this.orderPlaced = true
       this.$auth.loggedIn ?  this.$auth.fetchUser() : null
@@ -270,6 +280,9 @@ export default {
     used_promo (){
       return this.$store.getters['cart/getCartPromo']
     },
+    coordinates () {
+        return this.currentCity.adresses.find(x => x.address === this.orderData.cafe_address).coordinates.split(',')
+    }
 
   }
 }

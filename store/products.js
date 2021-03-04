@@ -5,6 +5,7 @@ export const state = () => ({
   souses:{},
   openedPizza:0,
   openedMeat:0,
+  banners:[]
 
 })
 
@@ -27,6 +28,9 @@ export const mutations = {
   },
   setOpenedMeat(state,data){
     state.openedMeat = data
+  },
+  setBanners(state,data){
+    state.banners = data
   }
 }
 
@@ -52,8 +56,12 @@ export const actions = {
   changeOpenedPizza({commit,state},data){
     commit('setOpenedPizza',data)
   },
-  changeOpenedMeat({commit,state},data){
-    commit('setOpenedMeat',data)
+  async setBannersAction({commit,state},data){
+    if (state.banners.length===0){
+      const responce = await this.$axios.get(`/api/items/get_banners`)
+      commit('setBanners',responce.data)
+    }
+
   },
 
 
@@ -67,5 +75,6 @@ export const getters = {
   getRecommendedItems: (state) => state.recommended_items,
   getOpenedPizza: (state) => state.openedPizza,
   getOpenedMeat: (state) => state.openedMeat,
+  getBanners: (state) => state.banners,
 }
 

@@ -14,21 +14,14 @@
           <path d="M14.759 9.8418L20.9409 16.9997L14.759 24.1576" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </div>
+
       <client-only>
         <swiper ref="homeTopSlider" :options="sliderHomeTopOption">
 
-          <swiper-slide class="home-page-slider__item">
-            <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
+          <swiper-slide class="home-page-slider__item" v-for="banner in this.$store.getters['products/getBanners']">
+            <div class=""><img :src="banner.image" alt="" data-not-lazy></div>
           </swiper-slide >
-          <swiper-slide class="home-page-slider__item">
-            <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
-          </swiper-slide>
-          <swiper-slide class="home-page-slider__item">
-            <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
-          </swiper-slide>
-          <swiper-slide class="home-page-slider__item">
-            <div class=""><img src="http://placehold.it/1100x500" alt="" data-not-lazy></div>
-          </swiper-slide>
+
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
       </client-only>
@@ -59,6 +52,7 @@ export default {
   async fetch({store}){
     await store.dispatch('city/fetchCity')
     await store.dispatch('cart/fetchCart')
+    await store.dispatch('products/setBannersAction')
   },
   components:{
     ItemCard,
