@@ -11,14 +11,14 @@
         </el-radio-group>
         <div v-if="orderData.delivery_type==='Курьером'" class="checkout-form">
 
-          <el-input class="in-edit-mode mb-10" v-model="orderData.name" placeholder="Ваше имя"></el-input>
+          <el-input class="in-edit-mode mb-10" v-model="orderData.name" placeholder="Ваше имя *"></el-input>
 
-          <el-input class="in-edit-mode mb-10" v-model="orderData.phone" placeholder="Телефон"></el-input>
+          <el-input class="in-edit-mode mb-10" v-model="orderData.phone" placeholder="Телефон *"></el-input>
 
           <el-checkbox class="mb-10" v-model="orderData.need_callback">Перезвоните мне для уточнения деталей заказа</el-checkbox>
           <div class="checkout-form__group group-3-1">
-            <el-input class="in-edit-mode " v-model="orderData.street" placeholder="Улица"></el-input>
-            <el-input class="in-edit-mode " v-model="orderData.house" placeholder="Дом"></el-input>
+            <el-input class="in-edit-mode " v-model="orderData.street" placeholder="Улица *"></el-input>
+            <el-input class="in-edit-mode " v-model="orderData.house" placeholder="Дом *"></el-input>
           </div>
           <div class="checkout-form__group group-4">
             <el-input class="in-edit-mode " v-model="orderData.flat" placeholder="Кв"></el-input>
@@ -33,7 +33,7 @@
           <h3 class="font-20 text-bold mb-10">Адрес кафе</h3>
           <p class="mb-20">{{currentCity.address}}</p>
           <el-radio-group v-model="orderData.cafe_address" class="mb-30">
-          <el-radio :label="address.address" v-for="address in currentCity.adresses"></el-radio>
+          <el-radio :label="address.address" v-for="address in currentCity.adresses" :key="address.id"></el-radio>
         </el-radio-group>
           <div class="checkout-map">
                <client-only>
@@ -119,7 +119,7 @@
 
             </div>
             <div class="cart-item__price">
-              <p class="cart-item__price--bonus">+ {{constructor.bonuses}} баллов</p>
+              <p v-if="$auth.loggedIn" class="cart-item__price--bonus">+ {{constructor.bonuses}} баллов</p>
               <p class="cart-item__price--summ">{{constructor.price}} р</p>
             </div>
           </div>
@@ -143,7 +143,7 @@
 
           </div>
           <div class="cart-item__price">
-            <p class="cart-item__price--bonus">+ {{cart_item.bonuses}} баллов</p>
+            <p v-if="$auth.loggedIn" class="cart-item__price--bonus">+ {{cart_item.bonuses}} баллов</p>
             <p class="cart-item__price--summ">{{cart_item.price}} р</p>
           </div>
         </div><!-- items-->
@@ -161,7 +161,7 @@
 
           </div>
           <div class="cart-item__price">
-            <p class="cart-item__price--bonus">+ {{souse.bonuses}} баллов</p>
+            <p v-if="$auth.loggedIn" class="cart-item__price--bonus">+ {{souse.bonuses}} баллов</p>
             <p class="cart-item__price--summ">{{souse.price}} р</p>
           </div>
         </div><!-- souses-->
@@ -169,7 +169,7 @@
       </div>
           <div class="checkout-cart__row">
             <p>Кол-во персон</p>
-            <p>1</p>
+            <p>{{this.$store.getters['cart/getCart'].persons}}</p>
           </div>
           <div class="checkout-cart__row">
             <p>Сумма</p>
@@ -256,6 +256,7 @@ export default {
           data:this.orderData,
           bonuses:this.used_bonuses,
           promo:this.used_promo,
+          source:'site'
         })
       console.log(response.data)
       await this.$store.dispatch('cart/fetchCart')

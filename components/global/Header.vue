@@ -317,6 +317,7 @@ export default {
     window.addEventListener('scroll', this.updateScroll);
 
     this.$route.path === '/' ? this.isHomePage = true : this.isHomePage = false
+
     this.currentCity = this.$store.getters['city/getCity'].find(x => x.id === this.$auth.$storage.getCookie('city_id'))
     this.categories = this.$store.getters['products/getCategories']
     console.log('city/getCity',this.$store.getters['city/getCity'])

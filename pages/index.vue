@@ -18,7 +18,7 @@
       <client-only>
         <swiper ref="homeTopSlider" :options="sliderHomeTopOption">
 
-          <swiper-slide class="home-page-slider__item" v-for="banner in this.$store.getters['products/getBanners']">
+          <swiper-slide class="home-page-slider__item" v-for="banner in this.$store.getters['products/getBanners']" :key="banner.id">
             <div class=""><img :src="banner.image" alt="" data-not-lazy></div>
           </swiper-slide >
 

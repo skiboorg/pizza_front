@@ -96,9 +96,9 @@
       <div v-else class="cart__persons">
         <p>Количество персон</p>
         <div class="cart-item__info--add">
-              <img @click="minusSouse(souse)" :class="{'isDisabled':serverAction}" src="/round-minus.svg" alt="">
-              <p>1</p>
-              <img @click="plusSouse(souse)" :class="{'isDisabled':serverAction}" src="/round-plus.svg" alt="">
+              <img @click="delPerson" :class="{'isDisabled':serverAction}" src="/round-minus.svg" alt="">
+              <p>{{this.$store.getters['cart/getCart'].persons}}</p>
+              <img @click="addPerson" :class="{'isDisabled':serverAction}" src="/round-plus.svg" alt="">
             </div>
       </div>
       <div v-if="!cartHeader">
@@ -287,6 +287,26 @@ export default {
     };
   },
   methods:{
+    async addPerson (item) {
+      this.serverAction = true
+      await this.$axios.post(`/api/cart/add_person`,
+        {
+          session_id:this.$auth.$storage.getCookie('session_id'),
+        })
+      await this.$store.dispatch('cart/fetchCart')
+      this.serverAction = false
+    },
+    async delPerson (item) {
+      this.serverAction = true
+      await this.$axios.post(`/api/cart/del_person`,
+        {
+          session_id:this.$auth.$storage.getCookie('session_id'),
+        })
+      await this.$store.dispatch('cart/fetchCart')
+      this.serverAction = false
+    },
+
+
     async addToCart (item) {
       this.serverAction = true
       await this.$axios.post(`/api/cart/add_to_cart`,

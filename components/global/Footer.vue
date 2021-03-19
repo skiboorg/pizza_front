@@ -59,9 +59,12 @@
     <a style="display: none" href="#" id="pizzaModalBtn"  @click.prevent="pizzaModal=true"></a>
     <el-dialog class="item-modal" :visible.sync="pizzaModal" @open="pizzaModalOpen" @closed="pizzaModalClosed">
       <div class="item-modal__header">
+
          <h3 class="item-modal__title">{{item.name}}</h3>
         <el-tooltip  placement="bottom-end" effect="light">
-          <div class="item-card__title--info-tooltip" slot="content"><p>К/Б/Ж/У</p><span>300/14/20/70</span></div>
+          <div class="item-card__title--info-tooltip" slot="content"><p>К/Б/Ж/У</p><span>
+            {{item.callories}}/{{item.belki}}/{{item.fat}}/{{item.uglevod}}
+          </span></div>
           <el-button class="item-card__title--info-btn" type="text"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="13" cy="13" r="13" fill="#F8F9FA"/>
             <path d="M12.2273 19H13.5682V10.2727H12.2273V19ZM12.9091 8.81818C13.4318 8.81818 13.8636 8.40909 13.8636 7.90909C13.8636 7.40909 13.4318 7 12.9091 7C12.3864 7 11.9545 7.40909 11.9545 7.90909C11.9545 8.40909 12.3864 8.81818 12.9091 8.81818Z" fill="#262626"/>
@@ -87,7 +90,7 @@
       <div class="item-modal__sizes">
         <el-radio v-model="pizzaSize" :label="22" >22 см</el-radio>
         <el-radio v-model="pizzaSize" :label="33" >33 см</el-radio>
-        <p>{{item.weight}} г</p>
+        <p>{{weight}} г</p>
       </div>
       <div class="item-modal__slider">
         <h3 class="item-modal__slider--title">Добавить ингредиенты</h3>
@@ -126,9 +129,10 @@ export default {
       is_pizza:false,
       is_meat:false,
       is_loading:false,
-      basePrice:0,
       base_price:0,
       pizzaSize: 22,
+      price_22:0,
+      price_33:0,
       additional_price:0,
 
       navLinks:[
@@ -183,7 +187,14 @@ export default {
   },
   watch: {
     pizzaSize: function (val){
-      val === 22 ? this.base_price = this.basePrice : this.base_price = parseInt(this.base_price * 1.2)
+      if (val === 22){
+        console.log('22')
+        this.base_price = this.price_22
+      }
+      else {
+        console.log('33')
+        this.base_price = this.price_33
+      }
     }
   },
   mounted() {
@@ -209,6 +220,8 @@ export default {
     pizzaModalClosed () {
       this.basePrice=0
       this.base_price=0
+      this.price_22=0
+      this.price_33=0
       this.pizzaSize=22
       this.additional_price=0
       this.is_loading=false
@@ -217,7 +230,9 @@ export default {
       const responce = await this.$axios(`/api/items/get_item_by_id/${this.$store.getters['products/getOpenedPizza']}`)
       this.item = responce.data
       this.is_pizza = true
-      this.basePrice = this.base_price = this.item.prices.find(x => x.city === this.$auth.$storage.getCookie('city_id')).price
+      this.price_22 = this.item.prices.find(x => x.city === this.$auth.$storage.getCookie('city_id')).price
+      this.price_33 = this.item.prices.find(x => x.city === this.$auth.$storage.getCookie('city_id')).price_33
+      this.base_price = this.price_22
 
     },
     async meatModalOpen () {
@@ -245,7 +260,11 @@ export default {
 
     total_price(){
       return this.base_price + this.additional_price
-    }
+    },
+    weight(){
+      return this.pizzaSize === 22 ? this.item.weight : this.item.weight_33
+    },
+
   }
 }
 </script>
