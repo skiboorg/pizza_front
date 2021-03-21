@@ -3,15 +3,18 @@
 
     <div class="item-card item-card__constructor">
       <div class="item-card__top" >
-        <img src="/constr.png" alt="">
+        <img style="object-fit: contain" src="/konstruktor.png" alt="">
       </div>
       <div class="item-card__bottom">
-        <div class="item-card__title">
+        <div class="">
+          <div class="item-card__title">
           <p>Пицца-конструктор</p>
         </div>
         <p class="item-card__ingridients">
           <span>Выберите половинки пицц и соберите свою!</span>
         </p>
+        </div>
+
         <div class="item-card__price">
           <p>от 1000р</p>
           <el-button @click="constructorModal = true" type="primary">Собрать</el-button>

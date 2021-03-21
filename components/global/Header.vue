@@ -173,13 +173,13 @@
         <el-input class="in-edit-mode" v-mask="'+7 (###) ###-##-##'" placeholder="+7 (xxx) xxx-xx-xx" v-model="userRegister.phone"></el-input>
         <el-input class="in-edit-mode" show-password placeholder="Пароль"v-model="userRegister.password1"></el-input>
         <el-input class="in-edit-mode" show-password placeholder="Пароль еще раз"v-model="userRegister.password2"></el-input>
-        <el-button type="primary" @click="userRegisterAction">Зарегистрироваться</el-button>
+        <el-input class="in-edit-mode" v-show="sms_code" placeholder="Код из смс" v-model="userRegister.sms"></el-input>
+        <el-button type="primary" @click="sms_code ? userRegisterAction() :send_sms()">{{sms_code ? 'Подтвердить код' : 'Отправить проверочный код'}} </el-button>
         <div class="modal-text"><p>Уже есть аккаунт?<span @click="authModalTab='loginTab'">Войти</span></p></div>
       </div><!-- registerTab-->
       <div v-if="authModalTab==='restoreTab'"><!-- restoreTab-->
         <h3 class="modal-title">Восстановление пароля</h3>
-        {{restorePhone}}
-        {{restoreCode}}
+
 
         <p class="modal-subtitle">{{restoreText}}</p>
         <div v-if="restoreStep===1">
@@ -232,12 +232,14 @@ export default {
       currentCityIsOK:true,
       currentCatAnchor:null,
       scrollPosition:null,
+      sms_code:null,
       userLogin:{
         phone:null,
         password:null,
       },
       userRegister:{
         phone:null,
+        sms:null,
         password1:null,
         password2:null,
       },
@@ -269,7 +271,7 @@ export default {
           320: {
 
             slidesPerView: 3,
-            spaceBetween: 50
+            spaceBetween: 10
           },
           // when window width is >= 480px
           480: {
@@ -388,7 +390,21 @@ export default {
         this.sendRestoreSMS()
       }
     },
+    async send_sms(){
+      console.log('sms')
+      const response = await  this.$axios.post(`api/user/send_code_sms`,{phone:this.userRegister.phone})
+      console.log(response.data)
+      if (response.data.code){
+        this.sms_code= response.data.code
+      }else {
+        this.notify('Ошибка','Телефон указан не верно','error')
+      }
+    },
     async userRegisterAction(){
+      if(this.sms_code!==this.userRegister.sms){
+        this.notify('Ошибка','Не верный код подтверждения','error')
+        return
+      }
       try{
         let response =  this.$axios.post('/auth/users/', {
           phone:this.userRegister.phone,
@@ -415,5 +431,8 @@ export default {
   }
 }
 </script>
-
+<style lang="sass" scoped>
+.swiper-wrapper
+  align-items: center
+</style>
 
