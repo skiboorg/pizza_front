@@ -108,14 +108,14 @@
                 <swiper-slide v-for="item in categories"
                               :key="item.id">
                   <span v-if="isHomePage">
-                <p  v-if="!item.url"><a @click="currentCatAnchor=item.id"
+                <p style="line-height: 18px;text-align: center" v-if="!item.url"><a @click="currentCatAnchor=item.id"
                                         :class="{'color-primary':currentCatAnchor===item.id}"
                                         href="#" v-scroll-to="`#catID_${item.id}`">{{item.name}}</a> </p>
-                <p  v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
+                <p style="line-height: 18px;text-align: center" v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
               </span>
                   <span v-else>
-                <p  v-if="!item.url"><nuxt-link  :to="`/#catID_${item.id}`">{{item.name}}</nuxt-link></p>
-                <p  v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
+                <p style="line-height: 18px;text-align: center" v-if="!item.url"><nuxt-link  :to="`/#catID_${item.id}`">{{item.name}}</nuxt-link></p>
+                <p style="line-height: 18px;text-align: center" v-else><nuxt-link :to="item.url">{{item.name}}</nuxt-link> </p>
               </span>
                 </swiper-slide>
                 <swiper-slide>
@@ -424,8 +424,9 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-.swiper-wrapper
-  align-items: center
+<style lang="sass">
+.header-bottom-menu__slider
+  & .swiper-wrapper
+    align-items: center
 </style>
 

@@ -27,7 +27,7 @@
       </client-only>
     </section>
 
-    <section :id="`catID_${category.id}`" class="home-page-category" v-for="category in categories" :key="category.id">
+    <section :id="`catID_${category.id}`" class="home-page-category" v-for="category in _.orderBy(categories,'order_num' )" :key="category.id">
       <div class="container">
         <h3 class="home-page-category__title">{{category.name}}</h3>
         <div class="home-page-category__items">
@@ -63,19 +63,7 @@ export default {
       scrollPosition: null,
       categories:this.$store.getters['products/getCategories'],
       items:this.$store.getters['products/getItems'],
-      // categories:[
-      //   {id:1,name:'Шашлык',with_constructor:false},
-      //   {id:2,name:'Пицца',with_constructor:true},
-      //   {id:3,name:'Роллы',with_constructor:false},
-      //   {id:4,name:'Шаурма',with_constructor:false},
-      //   {id:5,name:'Пироги',with_constructor:false},
-      //   {id:6,name:'Закуски',with_constructor:false},
-      //   {id:7,name:'Напитки',with_constructor:false},
-      //   {id:8,name:'Рыба',with_constructor:false},
-      //   {id:9,name:'Акции',with_constructor:false},
-      // ],
       sliderHomeTopOption: {
-
         //slidesPerView: 2,
         spaceBetween: 10,
         loop:true,
