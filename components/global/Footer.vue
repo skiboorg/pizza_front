@@ -101,7 +101,7 @@
               <div @click="toggleAdditionIngridient(index,ingridient.price.find(x => x.city === $auth.$storage.getCookie('city_id')).price)"
                    class="item-modal__slider--item " :class="{'itemChecked':ingridient.is_added}">
                 <img :src="ingridient.image" alt="" data-not-lazy>
-                <p class="font-12">{{ingridient.name}}</p>
+                <p style="word-break: keep-all" class="font-12">{{ingridient.name}}</p>
                 <p class="font-12 text-bold">{{ingridient.price.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
               </div>
             </swiper-slide>

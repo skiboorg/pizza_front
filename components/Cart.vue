@@ -93,20 +93,13 @@
         <p>Очистить корзину</p>
         <p @click="clearCart" class="cart__clear--icon" :class="{'isDisabled':serverAction}"> <i class="el-icon-delete"></i></p>
       </div>
-      <div v-else class="cart__persons">
-        <p>Количество персон</p>
-        <div class="cart-item__info--add">
-              <img @click="delPerson" :class="{'isDisabled':serverAction}" src="/round-minus.svg" alt="">
-              <p>{{this.$store.getters['cart/getCart'].persons}}</p>
-              <img @click="addPerson" :class="{'isDisabled':serverAction}" src="/round-plus.svg" alt="">
-            </div>
-      </div>
+
       <div v-if="!cartHeader">
         <div v-if="is_meat_in_cart > 0 " class="cart__add-block">
         <p class="cart__title">Рекомендуем к шашлыку</p>
         <div class="cart__add-list">
           <p @click="addToCart(item)"
-             v-if="$store.getters['cart/getCart'].items.filter(x=>x.item.id === item.id).length===0 && item.is_for_meat"
+             v-if="item.is_for_meat"
 
              v-for="item in this.$store.getters['products/getItems']" :key="item.id">
 
@@ -114,13 +107,32 @@
           </p>
         </div>
       </div>
+         <div  class="cart__add-block">
+          <p class="cart__title">Соусы</p>
+          <client-only>
+            <swiper style="height: 80px;"  class="cart-souse__slider" :options="soucesSliderOption">
+              <swiper-slide v-for="souse in souses" :key="souse.id">
+                <div @click="addSouseToCart(souse)" class="cart-recommended__slider-item">
+                  <img :src="souse.image" alt="" data-not-lazy>
+                  <div class="">
+                    <p class="font-12">{{souse.name}}</p>
+                    <p class="text-bold">{{souse.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
+                  </div>
+                </div>
+              </swiper-slide>
+
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+            </swiper>
+          </client-only>
+        </div>
         <div  class="cart__add-block">
           <p class="cart__title">Рекомендуем к заказу</p>
 
           <client-only>
-            <swiper  class="cart-recommended__slider" :options="recommendedSliderOption">
-              <transition name="el-fade-in">
-                <swiper-slide v-if="$store.getters['cart/getCart'].items.filter(x=>x.item.id === item.id).length===0"
+            <swiper style="height: 100px" ref="recommendedSlider"  class="cart-recommended__slider" :options="recommendedSliderOption">
+
+                <swiper-slide
                               v-for="item in  recommended_items" :key="item.id">
 
                   <div @click="addToCart(item)" class="cart-recommended__slider-item">
@@ -131,32 +143,22 @@
                     </div>
                   </div>
                 </swiper-slide>
-              </transition>
-              <div class="swiper-button-prev" slot="button-prev"></div>
-              <div class="swiper-button-next" slot="button-next"></div>
-            </swiper>
-          </client-only>
-        </div>
-        <div  class="cart__add-block">
-          <p class="cart__title">Соусы</p>
-          <client-only>
-            <swiper  class="cart-souse__slider" :options="soucesSliderOption">
-              <swiper-slide v-for="souse in souses" :key="souse.id">
-                <div @click="addSouseToCart(souse)" class="cart-souse__slider-item">
-                  <img :src="souse.image" alt="" data-not-lazy>
-                  <div class="">
-                    <p class="font-12">{{souse.name}}</p>
-                    <p>{{souse.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
-                  </div>
-                </div>
-              </swiper-slide>
 
               <div class="swiper-button-prev" slot="button-prev"></div>
               <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
           </client-only>
         </div>
+        <div class="cart__persons">
+        <p>Количество персон</p>
+        <div class="cart-item__info--add">
+              <img @click="delPerson" :class="{'isDisabled':serverAction}" src="/round-minus.svg" alt="">
+              <p>{{this.$store.getters['cart/getCart'].persons}}</p>
+              <img @click="addPerson" :class="{'isDisabled':serverAction}" src="/round-plus.svg" alt="">
+            </div>
       </div>
+      </div>
+
 
 
       <div v-if="cartHeader" class="cart__total">
@@ -218,72 +220,49 @@ export default {
       promoCode:null,
       with_bonuses: this.$store.getters['cart/getCartBonuses'] > 0,
       recommendedSliderOption: {
-        slidesPerView: this.recommended_items_count,
+        slidesPerView: 4,
         spaceBetween: 10,
-        loop:false,
-        centeredSlides: false,
-        // pagination: {
-        //   el: '.swiper-pagination',
-        //   dynamicBullets: true
-        // },
+        centeredSlides: true,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
+        },
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 50
+          },
+          400: {
+            slidesPerView: 2,
+            spaceBetween: 50
+          },
+          900: {
+            slidesPerView: 4,
+          }
         }
-        // ,autoplay: {
-        //   delay: 3000,
-        // },
-
-        // breakpoints: {
-        //   // when window width is >= 320px
-        //   320: {
-        //
-        //     slidesPerView: 3,
-        //     spaceBetween: 50
-        //   },
-        //   // when window width is >= 480px
-        //   480: {
-        //     slidesPerView: 5,
-        //     //spaceBetween: 30
-        //   },
-        //   // when window width is >= 640px
-        //
-        // }
       },
       soucesSliderOption: {
-
-        slidesPerView: this.souses_items_count,
+        slidesPerView: 4,
         spaceBetween: 10,
-        //loop:true,
-        centeredSlides: false,
-        // pagination: {
-        //   el: '.swiper-pagination',
-        //   dynamicBullets: true
-        // },
+        centeredSlides: true,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
+        },
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 50
+          },
+          400: {
+            slidesPerView: 2,
+            spaceBetween: 50
+          },
+          900: {
+            slidesPerView: 4,
+          }
         }
-        // ,autoplay: {
-        //   delay: 3000,
-        // },
-
-        // breakpoints: {
-        //   // when window width is >= 320px
-        //   320: {
-        //
-        //     slidesPerView: 3,
-        //     spaceBetween: 50
-        //   },
-        //   // when window width is >= 480px
-        //   480: {
-        //     slidesPerView: 5,
-        //     //spaceBetween: 30
-        //   },
-        //   // when window width is >= 640px
-        //
-        // }
-      },
+      }
     };
   },
   methods:{

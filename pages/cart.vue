@@ -1,7 +1,7 @@
 <template>
 <div class="cart-container">
   <h3 class="home-page-category__title">Корзина</h3>
-    <Cart :recommended_items_count="2" :souses_items_count="4" :cartHeader="false"/>
+    <Cart :cartHeader="false"/>
   </div>
 </template>
 

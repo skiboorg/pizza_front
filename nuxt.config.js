@@ -48,6 +48,7 @@ export default {
     '@/plugins/vuesax',
     '@/plugins/scroll',
     '@/plugins/mask',
+    '@/plugins/lodash',
     { src: '@/plugins/swiper', mode: 'client' },
     {src:'@/plugins/ymapPlugin',mode: 'client'},
   ],

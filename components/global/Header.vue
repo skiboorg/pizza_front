@@ -312,18 +312,13 @@ export default {
     }
   },
   beforeCreate() {
-    console.log('header before create',this.$auth.$storage.getCookie('city_id'))
     this.$auth.$storage.getCookie('city_id') ? null : this.cityModal = true
   },
   mounted() {
     window.addEventListener('scroll', this.updateScroll);
-
     this.$route.path === '/' ? this.isHomePage = true : this.isHomePage = false
-
     this.currentCity = this.$store.getters['city/getCity'].find(x => x.id === this.$auth.$storage.getCookie('city_id'))
-    this.categories = this.$store.getters['products/getCategories']
-    console.log('city/getCity',this.$store.getters['city/getCity'])
-    console.log('header mounted',this.$store.getters['city/getMainCity'])
+    this.categories = _.orderBy(this.$store.getters['products/getCategories'],'order_num' )
 
     if (!this.$auth.$storage.getCookie('session_id')){
       this.$auth.$storage.setCookie('session_id', this.uuidv4())
@@ -331,9 +326,6 @@ export default {
     }else {
       console.log('session_id exists')
     }
-
-
-
   },
   methods: {
     notify(title,message,type){

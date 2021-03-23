@@ -44,11 +44,16 @@
       p
         margin-bottom: 5px
       span
-        font-size: 14px
-        color: $grey-color
-        word-break: break-word
+        color: #505050
+        line-break: anywhere
+        display: inline-block
+        text-transform: lowercase
         &::after
           content: ','
+          margin-right: 3px
+        &:first-child
+          &:first-letter
+            text-transform: uppercase
         &:last-child
           &::after
             content: none
