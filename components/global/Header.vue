@@ -291,7 +291,8 @@ export default {
     },
     '$store.state.products.categories': function() {
       console.log(this.$store.state.products.categories)
-      this.categories = this.$store.getters['products/getCategories']
+      //this.categories = this.$store.getters['products/getCategories']
+       this.categories = _.orderBy(this.$store.getters['products/getCategories'],'order_num' )
     },
     '$route.path': function(val) {
       let fullPath =this.$route.fullPath.split('#')
