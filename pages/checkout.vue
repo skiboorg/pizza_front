@@ -265,7 +265,7 @@ export default {
         window.location.href = response.data.formUrl
       }
       this.orderCode = response.data.code
-      this.orderPlaced = true
+      this.orderPlaced = false
       this.$auth.loggedIn ?  this.$auth.fetchUser() : null
     }
   },

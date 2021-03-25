@@ -232,7 +232,7 @@ export default {
             slidesPerView: 1,
             spaceBetween: 50
           },
-          400: {
+          350: {
             slidesPerView: 2,
             spaceBetween: 50
           },
@@ -254,7 +254,7 @@ export default {
             slidesPerView: 1,
             spaceBetween: 50
           },
-          400: {
+          350: {
             slidesPerView: 2,
             spaceBetween: 50
           },
