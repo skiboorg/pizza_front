@@ -29,7 +29,8 @@
       <h4>Свяжитесь с нами</h4>
       <div class="about-page-block__phone">
         <img src="/red-phone-icon.png" alt="">
-        <p class="mb-10"><a href="tel:+79320984040">+7 (932) 098-40-40</a></p>
+        <p class="mb-10"><a href="tel:+73494292407">+7 (3494) 29 24 07</a></p>
+        <p class="mb-10"><a href="tel:+73494292507">+7 (3494) 29 25 07</a></p>
       </div>
 
     </div>

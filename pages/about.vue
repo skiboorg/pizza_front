@@ -55,11 +55,11 @@
           <div class="about-page-block__img--decor">
             <img src="/aboutPage/delivery.svg" alt="">
           </div>
-          <img src="/aboutPage/4.jpg" alt="">
+          <img src="/aboutPage/del.jpg" alt="">
         </div>
         <div class="about-page-block__text">
           <h3>6. Быстрая и безопасная доставка</h3>
-          <p>Не нужно ждать целый час свежеприготовленную еду — доставим заказ за 30 минут в термосумке. С заботой о
+          <p>Не нужно ждать 1.5-2 часа свежеприготовленную еду — доставим заказ за 55 минут в термосумке. С заботой о
             здоровье предусмотрена бесконтактная доставка.
           </p>
           <h3>7. Демократичные цены</h3>
@@ -76,22 +76,22 @@
             <div class="about-page-block__face">
               <img src="/aboutPage/p1.jpg" alt="">
               <div class="about-page-block__face--name">
-                <p class="about-page-block__face--name-name">Имя</p>
-                <p class="about-page-block__face--name-work">Повар</p>
+                <p class="about-page-block__face--name-name">Иван</p>
+                <p class="about-page-block__face--name-work">Пиццайоло</p>
               </div>
             </div>
              <div class="about-page-block__face">
               <img src="/aboutPage/p2.jpg" alt="">
                 <div class="about-page-block__face--name">
-                <p class="about-page-block__face--name-name">Имя</p>
-                <p class="about-page-block__face--name-work">Повар</p>
+                <p class="about-page-block__face--name-name">Сергей</p>
+                <p class="about-page-block__face--name-work">Шашлычник</p>
               </div>
             </div>
              <div class="about-page-block__face">
               <img src="/aboutPage/p3.jpg" alt="">
                 <div class="about-page-block__face--name">
-                <p class="about-page-block__face--name-name">Имя</p>
-                <p class="about-page-block__face--name-work">Повар</p>
+                <p class="about-page-block__face--name-name">Мария</p>
+                <p class="about-page-block__face--name-work">Сушист</p>
               </div>
             </div>
           </div>

@@ -7,7 +7,8 @@
             <img src="/logo_big.svg" alt="" data-not-lazy>
           </div>
           <div class="header-top-address">
-            <p @click="currentCityIsOK=false, cityModal=true" class="header-top-address__link">{{currentCity.name}}</p>
+<!--            @click="currentCityIsOK=false, cityModal=true"-->
+            <p  class="header-top-address__link">{{currentCity.name}}</p>
             <p>{{currentCity.info}}</p>
           </div>
           <nav class="header-top-nav">
@@ -22,11 +23,11 @@
 
           </div>
           <div class="header-top-phone text-right">
-            <p><a class="color-primary text-bold font-20" target="_blank" href="tel:89095483434">89095483434</a></p>
-            <p>Обратный звонок</p>
+            <p><a class="color-primary text-bold font-20" target="_blank" href="tel:+73494292407">+7 (3494) 29 24 07</a></p>
+<!--            <p>Обратный звонок</p>-->
           </div>
           <div class="header-top-mobile-phone">
-            <a href="tel:89095483434" target="_blank">
+            <a href="tel:+73494292407" target="_blank">
               <img src="/red-phone-icon.png" alt="" data-not-lazy>
             </a>
           </div>
@@ -59,15 +60,15 @@
 
             </div>
             <div class="header-mobile-menu__wrapper">
-
-            <span>Ваш город: <p @click="currentCityIsOK=false, cityModal=true" class="header-top-address__link">{{currentCity.name}}</p></span>
+<!--@click="currentCityIsOK=false, cityModal=true"-->
+            <span>Ваш город: <p  class="header-top-address__link">{{currentCity.name}}</p></span>
             <p>{{currentCity.info}}</p><br>
 
               <a v-if="!this.$auth.loggedIn" href="#" @click.prevent="authModal=true">Войти</a>
               <nuxt-link v-else to="/lk">ЛК</nuxt-link>
               <nuxt-link to="/">Главная</nuxt-link>
               <nuxt-link :to="link.url" v-for="link in navLinks" :key="link.id">{{link.name}}</nuxt-link>
-              <a href="#">Телефон доставки: 8-ххх-ххх-хх-хх</a>
+              <a href="#">Телефон доставки: +7 3494 29 24 07</a>
               <div class="header-mobile-menu__social">
                 <a href="#"><img src="/vk-icon.svg" alt=""></a>
                 <a href="#"><img src="/inst-icon.svg" alt=""></a>
@@ -256,8 +257,8 @@ export default {
       mobileMenuActive:false,
       navLinks:[
         {id:1,url:'/promotions',name:'Акции'},
-        {id:2,url:'/about',name:'О нас'},
         {id:3,url:'/delivery',name:'Доставка и оплата'},
+        {id:2,url:'/about',name:'О нас'},
         {id:4,url:'/contacts',name:'Контакты'}
       ],
       categories:null,
