@@ -18,14 +18,14 @@ export default {
 
   },
   head: {
-    title: 'pizza_front',
+    title: 'Сеть мясных кафе Мясо на углях',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'ru'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'Сеть мясных кафе Мясо на углях' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
