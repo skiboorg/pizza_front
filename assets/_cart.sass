@@ -5,7 +5,7 @@
   &.cartHeader
     position: absolute
     background: #FFFFFF
-    box-shadow: 0px 100px 80px rgba(21, 29, 42, 0.07), 0px 22.3363px 17.869px rgba(21, 29, 42, 0.0348335), 0px 12.5216px 10.0172px rgba(21, 29, 42, 0.026166), 0px 6.6501px 5.32008px rgba(21, 29, 42, 0.0182308), 0px 2.76726px 2.21381px rgba(21, 29, 42, 0.00992385)
+    box-shadow: 0px 100px 80px rgba(21, 29, 42, 0.07), 0px 22.3363px 17.869px rgba(21, 29, 42, 0.0348335), 0px -5.478400000000001px 10.0172px rgba(21, 29, 42, 0.056166), 0px 6.6501px 5.32008px rgba(21, 29, 42, 0.0182308), 0px 2.76726px 2.21381px rgba(21, 29, 42, 0.00992385)
     border-radius: 5px
     right: 0
     top: 45px
@@ -16,7 +16,7 @@
     pointer-events: none
     transition: all .3s ease-in-out
     &.cartHeaderActive
-      top: 35px
+      //top: 35px
       opacity: 1
       pointer-events: all
     & .cart-items
@@ -355,6 +355,8 @@
             font-size: 14px
         &__title
           font-size: 16px
+      &.cartHeaderActive
+        top: 45px
     &-item
       img
         min-width: 115px
