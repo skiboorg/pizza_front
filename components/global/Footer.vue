@@ -18,8 +18,8 @@
         <div class="footer-row">
           <p class="mb-25">Связаться с нами </p>
           <div class="header-mobile-menu__social mb-25">
-            <a href="#"><img src="/vk-icon.svg" alt=""></a>
-            <a href="#"><img src="/inst-icon.svg" alt=""></a>
+            <a href="https://vk.com/public199319645" target="_blank"><img src="/vk-icon.svg" alt=""></a>
+            <a href="https://www.instagram.com/myaso_na_uglyah_89/" target="_blank"><img src="/inst-icon.svg" alt=""></a>
             <div class=""></div>
 <!--            <a href="#"><img src="/whatsapp-icon.svg" alt=""></a>-->
           </div>
