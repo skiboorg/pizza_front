@@ -3,48 +3,13 @@
     <div class="container">
       <h1 class="home-page-category__title">Акции</h1>
       <div class="promotions">
-        <div class="promotion">
-          <img class="promotion__img" src="http://placehold.it/410x190" alt="">
-          <p class="promotion__title">Название акции</p>
-          <p class="promotion__text">условия акции условия акции условия акции условия акции условия акции условия акции  </p>
-          <el-button plain>Заказать</el-button>
+        <div class="promotion" v-for="promo in promotions" :key="promo.id">
+          <img class="promotion__img" :src="promo.image" alt="">
+          <p class="promotion__title">{{promo.name}}</p>
+          <p class="promotion__text">{{promo.text}} </p>
+<!--          <el-button plain>Заказать</el-button>-->
         </div>
-        <div class="promotion">
-          <img class="promotion__img" src="http://placehold.it/410x190" alt="">
-          <p class="promotion__title">Название акции</p>
-          <p class="promotion__text">условия акции условия акции условия акции условия акции условия акции условия акции  </p>
-          <el-button plain>Заказать</el-button>
-        </div>
-        <div class="promotion">
-          <img class="promotion__img" src="http://placehold.it/410x190" alt="">
-          <p class="promotion__title">Название акции</p>
-          <p class="promotion__text">условия акции условия акции условия акции условия акции условия акции условия акции  </p>
-          <el-button plain>Заказать</el-button>
-        </div>
-        <div class="promotion">
-          <img class="promotion__img" src="http://placehold.it/410x190" alt="">
-          <p class="promotion__title">Название акции</p>
-          <p class="promotion__text">условия акции условия акции условия акции условия акции условия акции условия акции  </p>
-          <el-button plain>Заказать</el-button>
-        </div>
-        <div class="promotion">
-          <img class="promotion__img" src="http://placehold.it/410x190" alt="">
-          <p class="promotion__title">Название акции</p>
-          <p class="promotion__text">условия акции условия акции условия акции условия акции условия акции условия акции  </p>
-          <el-button plain>Заказать</el-button>
-        </div>
-        <div class="promotion">
-          <img class="promotion__img" src="http://placehold.it/410x190" alt="">
-          <p class="promotion__title">Название акции</p>
-          <p class="promotion__text">условия акции условия акции условия акции условия акции условия акции условия акции  </p>
-          <el-button plain>Заказать</el-button>
-        </div>
-        <div class="promotion">
-          <img class="promotion__img" src="http://placehold.it/410x190" alt="">
-          <p class="promotion__title">Название акции</p>
-          <p class="promotion__text">условия акции условия акции условия акции условия акции условия акции условия акции  </p>
-          <el-button plain>Заказать</el-button>
-        </div>
+
 
       </div>
 
@@ -61,6 +26,16 @@
     await store.dispatch('city/fetchCity')
     await store.dispatch('cart/fetchCart')
   },
+    async asyncData({$axios}){
+      try{
+        const  response = await $axios.get(`/api/promotion/get_all`)
+        const promotions = response.data
+        return {promotions }
+      }catch (e) {
+        throw e
+      }
+
+    },
     scrollToTop: true,
     // auth: true,
     data() {

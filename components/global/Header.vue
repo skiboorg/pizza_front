@@ -181,19 +181,18 @@
       <div v-if="authModalTab==='restoreTab'"><!-- restoreTab-->
         <h3 class="modal-title">Восстановление пароля</h3>
 
-
         <p class="modal-subtitle">{{restoreText}}</p>
         <div v-if="restoreStep===1">
-          <el-input class="in-edit-mode" v-mask="'+7 (###) ###-##-##'" placeholder="+7 (xxx) xxx-xx-xx" v-model="restorePhone"></el-input>
-          <el-button type="primary" :loading="restoreButtonLoading" @click="sendRestoreSMS">Отправить СМС с кодом</el-button>
+          <el-input class="in-edit-mode" v-mask="'+7 (###) ###-##-##'" placeholder="+7 (xxx) xxx-xx-xx" v-model="userRegister.phone"></el-input>
+          <el-button type="primary" :loading="restoreButtonLoading" :disabled="!userRegister.phone" @click="sendRestoreSMS">Отправить СМС с кодом</el-button>
         </div>
         <div v-if="restoreStep===2">
           <el-input style="display: none" class="in-edit-mode"  placeholder="- - - -" v-model="restoreCode"></el-input>
-          <el-input class="in-edit-mode" v-mask="'#-#-#-#'" placeholder="- - - -" v-model="restoreCode"></el-input>
-          <el-button type="primary" :loading="restoreButtonLoading" @click="sendRestoreSMS">Отправить код</el-button>
+          <el-input class="in-edit-mode" v-mask="'####'" placeholder="код подтверждения" v-model="restoreCode"></el-input>
+          <el-button type="primary" :loading="restoreButtonLoading" :disabled="sms_code!==restoreCode" @click="changePassword">Сбросить пароль</el-button>
         </div>
 
-        <div class="modal-text"><p><span>Повторить отправку смс ({{restoreSecondsLeft}} сек)</span> </p></div>
+
       </div><!-- restoreTab-->
 
 
@@ -228,6 +227,7 @@ export default {
   data() {
     return {
       cityModal: false,
+      sms_is_sent: false,
       cartHeaderActive: false,
       currentCity:{id:'',name:'',info:''},
       currentCityIsOK:true,
@@ -343,6 +343,13 @@ export default {
         return v.toString(16);
       });
     },
+    async changePassword(){
+      console.log('change')
+      const response = await  this.$axios.post(`api/user/change_password`,{phone:this.userRegister.phone})
+      this.userLogin.phone = this.userRegister.phone
+      this.userRegister.phone = null
+      this.authModalTab='loginTab'
+    },
     async changeCity (id) {
       await this.$store.dispatch('city/changeMainCity',id)
       await this.$store.dispatch('products/fetchItems')
@@ -372,11 +379,13 @@ export default {
       this.restoreSecondsLeft = 59
 
     },
-    sendRestoreSMS(){
-      this.countDownTimer()
+    async sendRestoreSMS(){
       this.restoreButtonLoading = true
+      await this.send_sms()
+      this.sms_is_sent = true
+      this.countDownTimer()
       this.restoreStep = 2
-      this.restoreText = `На номер ${this.restorePhone} было отправлено сообщение с кодом необходимым для восстановления пароля, введите его для восстановления пароля`
+      this.restoreText = `На номер ${this.userRegister.phone} было отправлено сообщение с кодом необходимым для восстановления пароля, введите его для восстановления пароля`
     },
     resendSMS(){
       if(this.restoreSecondsLeft === 0){
@@ -393,6 +402,7 @@ export default {
       }else {
         this.notify('Ошибка','Телефон указан не верно','error')
       }
+      this.restoreButtonLoading = false
     },
     async userRegisterAction(){
       if(this.sms_code!==this.userRegister.sms){
