@@ -25,10 +25,27 @@
         </div>
         <div class="">
           <img class="mb-20" src="/delivery.jpg" alt="">
+
         </div>
 
 
       </div>
+      <p class="mb-50">При покупке любых блюд, на любую сумму мы начисляем бонусы в размере 0,5% от суммы заказа,
+        которыми вы сможете рассчитываться при любом заказе, в любое время.
+      Чтобы бонусы, при покупке, могли начисляться - <strong>необходимо зарегистрироваться на сайте.</strong>  </p>
+      <div class="text-center ">
+        <p style="font-weight: bold;font-size: 20px">При регистрации с компьютера:</p>
+        <img src="/desk.jpg" alt="">
+      </div>
+      <div class="text-center mb-50">
+        <p style="font-weight: bold; font-size: 20px" class="mb-50">При регистрации с мобильного устройства:</p>
+        <div class="delivery-page-top">
+           <img src="/mob1.jpg" alt="">
+        <img src="/mob2.jpg" alt="">
+        </div>
+
+      </div>
+
 
 <!--      <p class="text-center text-bold delivery-page__time">Среднее время доставки 30 минут</p>-->
       <h3>Способы оплаты</h3>

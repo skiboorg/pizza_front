@@ -7,7 +7,7 @@
           <img class="promotion__img" :src="promo.image" alt="">
           <p class="promotion__title">{{promo.name}}</p>
           <p class="promotion__text">{{promo.text}} </p>
-<!--          <el-button plain>Заказать</el-button>-->
+          <el-button plain v-if="promo.category" @click="$router.push(`/#catID_${promo.category}`)">Перейти</el-button>
         </div>
 
 
