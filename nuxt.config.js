@@ -65,7 +65,22 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    'nuxt-lazy-load'
+    'nuxt-lazy-load',
+    ['@nuxtjs/yandex-metrika',
+      {
+        id: '75118636',
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+      }],
+    ['nuxt-facebook-pixel-module', {
+      track: 'PageView',
+      pixelId: '445940943377030',
+      autoPageView: true,
+      disabled: false
+    }]
   ],
   // router: {
   //    middleware: ['auth']

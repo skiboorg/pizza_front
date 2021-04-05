@@ -18,23 +18,23 @@
             </el-button>
           </el-tooltip>
         </div>
-         <p class="item-card__ingridients">
-        <span v-for="(ingridient,index) in item.base_ingridients" :key="ingridient.id">{{  ingridient.name}}</span>
-      </p>
+        <p class="item-card__ingridients">
+          <span v-for="(ingridient,index) in item.base_ingridients" :key="ingridient.id">{{  ingridient.name}}</span>
+        </p>
       </div>
 
       <div class="">
-         <div v-if="!item.category.is_pizza" class="item-card__add">
-            <img @click="minusUnit" src="/round-minus.svg" alt="">
-            <p>{{total_units}} {{unit_name}}</p>
-            <img @click="plusUnit" src="/round-plus.svg" alt="">
-          </div>
-      <div class="item-card__price">
-        <p><span v-if="item.category.is_pizza">от</span> {{item.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
-        <el-button v-if="item.category.is_pizza" type="primary" @click="openModalPizza(item.id)">Выбрать</el-button>
-<!--        <el-button v-else-if="item.category.is_meat" type="primary" @click="openModalMeat(item.id)">Выбрать meat</el-button>-->
-        <el-button :loading="is_loading" v-else type="primary" @click="addToCart(item)">В корзину</el-button>
-      </div>
+        <div v-if="!item.category.is_pizza" class="item-card__add">
+          <img @click="minusUnit" src="/round-minus.svg" alt="">
+          <p>{{total_units}} {{unit_name}}</p>
+          <img @click="plusUnit" src="/round-plus.svg" alt="">
+        </div>
+        <div class="item-card__price">
+          <p><span v-if="item.category.is_pizza">от</span> {{item.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
+          <el-button v-if="item.category.is_pizza" type="primary" @click="openModalPizza(item.id)">Выбрать</el-button>
+          <!--        <el-button v-else-if="item.category.is_meat" type="primary" @click="openModalMeat(item.id)">Выбрать meat</el-button>-->
+          <el-button :loading="is_loading" v-else type="primary" @click="addToCart(item)">В корзину</el-button>
+        </div>
       </div>
 
     </div>
@@ -82,6 +82,17 @@ export default {
         })
       await this.$store.dispatch('cart/fetchCart')
       this.is_loading = false
+      this.$fb.track('AddToCart',{
+        value: this.item.prices.find(x => x.city === this.$auth.$storage.getCookie('city_id')).price,
+        currency: 'RUB',
+        contents: [
+          {
+            id: this.item.id,
+            quantity: 1
+          }
+        ],
+        content_ids: this.item.id,
+      });
     },
 
   },

@@ -114,6 +114,7 @@ export default {
   },
   async mounted() {
      await this.$store.dispatch('products/fetchItems')
+    this.$fb.enable()
 
   },
   methods: {

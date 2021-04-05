@@ -170,7 +170,7 @@
           <p class="cart__title">Начислено баллов</p>
           <p class="cart__total-number">{{this.$store.getters['cart/getCart'].total_bonuses}}</p>
         </div>
-        <el-button type="primary" @click="$router.push('/cart')">Оформить заказ</el-button>
+        <el-button type="primary" @click="openCartPage">Оформить заказ</el-button>
       </div>
       <div v-else class="cart__total mb-50">
         <div v-if="$auth.loggedIn">
@@ -192,7 +192,7 @@
         </div>
         <div class="cart__total-row">
            <el-button  plain @click="$router.push('/')">Вернуться в меню</el-button>
-           <el-button  type="primary" @click="$router.push('/checkout')">Оформить заказ</el-button>
+           <el-button  type="primary" @click="openCheckoutPage">Оформить заказ</el-button>
         </div>
 
 
@@ -266,6 +266,18 @@ export default {
     };
   },
   methods:{
+    openCartPage(){
+      this.$fb.track('InitiateCheckout',{
+      value: this.$store.getters['cart/getCart'].total_price,
+      currency: 'RUB',
+      })
+      this.$router.push('/cart')
+    },
+    openCheckoutPage(){
+      this.$fb.track('Lead')
+      this.$router.push('/checkout')
+
+    },
     async addPerson (item) {
       this.serverAction = true
       await this.$axios.post(`/api/cart/add_person`,

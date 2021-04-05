@@ -23,7 +23,7 @@
 
           </div>
           <div class="header-top-phone text-right">
-            <p><a class="color-primary text-bold font-20" target="_blank" href="tel:+73494292407">+7 (3494) 29 24 07</a></p>
+            <p><a class="color-primary text-bold font-20" target="_blank" @click="$fb.track('Contact');" href="tel:+73494292407">+7 (3494) 29 24 07</a></p>
 <!--            <p>Обратный звонок</p>-->
           </div>
           <div class="header-top-mobile-phone">
@@ -417,6 +417,7 @@ export default {
 
         this.notify('Успешно','Аккаунт создан','success')
         this.authModalTab='loginTab'
+        this.$fb('track', 'CompleteRegistration');
       }catch (e) {
         this.notify('Ошибка','Проверьте введеные данные','error')
       }

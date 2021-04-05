@@ -260,6 +260,17 @@ export default {
         })
       console.log(response.data)
       await this.$store.dispatch('cart/fetchCart')
+//       this.$fb.track('Purchase',{
+//
+// value: 0,
+// currency: 'RUB',
+// contents: [
+// {
+// id: 0,
+//
+// quantity: количество
+// content_ids: 'переменную, подтягивающую найди контента',
+//       })
       if (response.data.formUrl){
         console.log('redirect ',response.data.formUrl)
         window.location.href = response.data.formUrl

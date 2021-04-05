@@ -25,6 +25,7 @@
     watch: {
     },
     mounted() {
+      this.$fb.enable()
     },
     methods: {
     }
