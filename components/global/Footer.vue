@@ -215,6 +215,17 @@ export default {
         })
       await this.$store.dispatch('cart/fetchCart')
       this.pizzaModal = false
+      this.$fb.track('AddToCart',{
+        value: this.total_price,
+        currency: 'RUB',
+        contents: [
+          {
+            id: this.item.id,
+            quantity: 1
+          }
+        ],
+        content_ids: this.item.id,
+      });
     },
     pizzaModalClosed () {
       this.basePrice=0

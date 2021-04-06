@@ -111,6 +111,17 @@ export default {
       })
       await this.$store.dispatch('cart/fetchCart')
       this.constructorModal = false
+      this.$fb.track('AddToCart',{
+        value: this.pizzaPrice,
+        currency: 'RUB',
+        contents: [
+          {
+            id: 'Конструктор',
+            quantity: 1
+          }
+        ],
+        content_ids: this.item.id,
+      });
     },
     selectPizzaPart(pizza){
       if (this.firstPizzaIndex && this.secondPizzaIndex){

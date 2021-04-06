@@ -43,7 +43,7 @@
              :key="cart_item.id">
 
           <img :src="cart_item.item.image" alt="">
-          <p @click="deleteUnit(cart_item)" :class="{'isDisabled':serverAction}" class="cart-item__remove"><i class="el-icon-delete"></i></p>
+          <p v-if="!cart_item.item.is_gift" @click="deleteUnit(cart_item)" :class="{'isDisabled':serverAction}" class="cart-item__remove"><i class="el-icon-delete"></i></p>
           <div class="cart-item__info">
             <div class="">
               <p class="cart-item__info--name">{{cart_item.item.name}}</p>
@@ -53,7 +53,7 @@
                 <span v-else>{{cart_item.quantity * cart_item.item.min_unit}} {{cart_item.item.unit_name}} </span>
               </p>
             </div>
-            <div class="cart-item__info--add">
+            <div v-if="!cart_item.item.is_gift" class="cart-item__info--add">
               <img @click="minusUnit(cart_item)" :class="{'isDisabled':serverAction}" src="/round-minus.svg" alt="">
               <p>{{cart_item.item.min_unit}} {{cart_item.item.unit_name}}</p>
               <img @click="plusUnit(cart_item)" :class="{'isDisabled':serverAction}" src="/round-plus.svg" alt="">

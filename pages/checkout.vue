@@ -1,6 +1,6 @@
 <template>
   <div class="checkout-container">
-    <h1 class="home-page-category__title">{{!orderPlaced ? 'Оформление заказа':'Оформление заказа завершено'}}</h1>
+    <h1 class="home-page-category__title">{{!orderPlaced ? 'Оформление заказа':`Оформление заказа завершено`}}</h1>
     <div v-if="!orderPlaced" >
       <div v-if="items_in_cart > 0" class="checkout-wrapper">
       <div class="checkout-left">
@@ -13,7 +13,7 @@
 
           <el-input class="in-edit-mode mb-10" v-model="orderData.name" placeholder="Ваше имя *"></el-input>
 
-          <el-input class="in-edit-mode mb-10" v-model="orderData.phone" placeholder="Телефон *"></el-input>
+          <el-input class="in-edit-mode mb-10" v-mask="'+7 (###) ###-##-##'" v-model="orderData.phone" placeholder="Телефон *"></el-input>
 
           <el-checkbox class="mb-10" v-model="orderData.need_callback">Перезвоните мне для уточнения деталей заказа</el-checkbox>
           <div class="checkout-form__group group-3-1">
@@ -29,6 +29,7 @@
           <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}"
                     placeholder="Комментарий к заказу" v-model="orderData.comment"></el-input>
         </div>
+
         <div v-else class="checkout-form">
           <h3 class="font-20 text-bold mb-10">Адрес кафе</h3>
           <p class="mb-20">{{currentCity.address}}</p>
@@ -59,8 +60,10 @@
           <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}"
                     placeholder="Комментарий к заказу" v-model="orderData.comment"></el-input>
         </div>
-        <h3 class="font-20 text-bold mb-10" >Когда доставить?</h3>
+        <h3 class="font-20 text-bold mb-10" > {{orderData.delivery_type==='Курьером' ? 'Когда доставить':'Когда заберете?'}}</h3>
+         <el-input v-if="orderData.delivery_type!=='Курьером'" class="in-edit-mode mb-10" v-mask="'+7 (###) ###-##-##'" v-model="orderData.phone" placeholder="Телефон *"></el-input>
         <div class="checkout-form__group group-2 mb-30">
+
           <el-date-picker v-if="orderData.delivery_type==='Курьером'" class="in-edit-mode "  v-model="orderData.date"
                           format="dd/MM/yyyy" value-format="yyyy-MM-dd"
 
@@ -84,7 +87,7 @@
          <el-radio v-model="orderData.payment" label="courier_card" border>Картой курьеру</el-radio>
         </div>
 
-        <el-button type="primary" @click="createOrder">Подтвердить заказ на
+        <el-button :loading="is_loading" :disabled="!is_data_ok" type="primary" @click="createOrder">Подтвердить заказ на
           {{this.$store.getters['cart/getCart'].total_price - used_bonuses - used_promo}}р
         </el-button>
         <p class="font-12">Нажимая на кнопку, вы даете согласие на обработку персональных данных</p>
@@ -191,7 +194,7 @@
     </div>
     </div>
     <div v-else class="checkout__new-order">
-      <p>Номер заказа {{orderCode}}</p>
+      <p class="home-page-category__title color-primary">Номер заказа {{orderCode}}</p>
     </div>
 
   </div>
@@ -211,6 +214,7 @@ export default {
   data() {
     return {
       orderPlaced:false,
+      is_loading:false,
       orderCode:null,
       currentCity:{},
       orderData:{
@@ -244,12 +248,17 @@ export default {
   watch: {
   },
   mounted() {
+          this.$fb.track('InitiateCheckout',{
+            value: this.$store.getters['cart/getCart'].total_price - this.used_bonuses - this.used_promo,
+              currency: 'RUB',
+          })
   this.currentCity = this.$store.getters['city/getCity'].find(x => x.id === this.$auth.$storage.getCookie('city_id'))
     this.orderData.cafe_address = this.currentCity.adresses[0].address
 
   },
   methods: {
     async createOrder(){
+      this.is_loading = true
       const response = await this.$axios.post('/api/order/new_order',
         {
           session_id:this.$auth.$storage.getCookie('session_id'),
@@ -260,27 +269,29 @@ export default {
         })
       console.log(response.data)
       await this.$store.dispatch('cart/fetchCart')
-//       this.$fb.track('Purchase',{
-//
-// value: 0,
-// currency: 'RUB',
-// contents: [
-// {
-// id: 0,
-//
-// quantity: количество
-// content_ids: 'переменную, подтягивающую найди контента',
-//       })
+      this.$fb.track('Purchase', {
+        value: this.$store.getters['cart/getCart'].total_price - this.used_bonuses - this.used_promo,
+        currency: 'RUB'
+      })
       if (response.data.formUrl){
         console.log('redirect ',response.data.formUrl)
         window.location.href = response.data.formUrl
       }
       this.orderCode = response.data.code
-      this.orderPlaced = false
+      this.orderPlaced = true
       this.$auth.loggedIn ?  this.$auth.fetchUser() : null
     }
   },
   computed:{
+    is_data_ok (){
+      if (this.orderData.delivery_type==='Курьером'){
+        return !!this.orderData.name && !!this.orderData.phone && this.orderData.phone.length===18 && !!this.orderData.street && !!this.orderData.house
+      }else {
+        return !!this.orderData.phone && this.orderData.phone.length===18
+      }
+
+
+    },
       items_in_cart () {
       return this.$store.getters['cart/getCart'].items.length +
         this.$store.getters['cart/getCart'].souces.length +
