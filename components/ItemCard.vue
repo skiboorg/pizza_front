@@ -30,7 +30,11 @@
           <img @click="plusUnit" src="/round-plus.svg" alt="">
         </div>
         <div class="item-card__price">
-          <p><span v-if="item.category.is_pizza">от</span> {{item.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р</p>
+
+          <p>
+             <span style="text-decoration: line-through;color: #7A7878; font-weight: normal" v-if="item.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).old_price>0">{{item.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).old_price}}р <br></span>
+            <span v-if="item.category.is_pizza">от</span> {{item.prices.find(x => x.city === $auth.$storage.getCookie('city_id')).price}}р
+          </p>
           <el-button v-if="item.category.is_pizza" type="primary" @click="openModalPizza(item.id)">Выбрать</el-button>
           <!--        <el-button v-else-if="item.category.is_meat" type="primary" @click="openModalMeat(item.id)">Выбрать meat</el-button>-->
           <el-button :loading="is_loading" v-else type="primary" @click="addToCart(item)">В корзину</el-button>

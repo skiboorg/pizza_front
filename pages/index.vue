@@ -32,7 +32,7 @@
         <h3 class="home-page-category__title">{{category.name}}</h3>
         <div class="home-page-category__items">
           <PizzaConstructor v-if="category.is_pizza"/>
-          <ItemCard v-if="!item.is_for_meat || !item.is_gift" v-for="item in items.filter(x => x.category.id === category.id)"
+          <ItemCard v-if="!item.is_for_meat && !item.is_gift" v-for="item in items.filter(x => x.category.id === category.id)"
                     :key="item.id"
                     :item="item"/>
 
