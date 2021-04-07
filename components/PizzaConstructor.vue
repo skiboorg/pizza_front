@@ -32,7 +32,8 @@
             <div v-if="!firstPizza"><p>Выберите пиццу</p> </div>
             <div v-else>
               <p>{{firstPizza.name}}</p>
-              <span v-for="ingridient in firstPizza.base_ingridients" :key="ingridient.id">{{ingridient.name}}</span>
+              <span>{{firstPizza.base_ingridients}}</span>
+<!--              <span v-for="ingridient in firstPizza.base_ingridients" :key="ingridient.id">{{ingridient.name}}</span>-->
             </div>
 
           </div>
@@ -41,7 +42,8 @@
             <div v-if="!secondPizza"><p>Выберите пиццу</p> </div>
             <div v-else>
               <p>{{secondPizza.name}}</p>
-              <span v-for="ingridient in secondPizza.base_ingridients" :key="ingridient.id">{{ingridient.name}}</span>
+              <span>{{secondPizza.base_ingridients}}</span>
+<!--              <span v-for="ingridient in secondPizza.base_ingridients" :key="ingridient.id">{{ingridient.name}}</span>-->
             </div>
           </div>
           </div>
