@@ -19,7 +19,8 @@
           </el-tooltip>
         </div>
         <p class="item-card__ingridients">
-          <span v-for="(ingridient,index) in item.base_ingridients" :key="ingridient.id">{{  ingridient.name}}</span>
+<!--          <span v-for="(ingridient,index) in item.base_ingridients" :key="ingridient.id">{{  ingridient.name}}</span>-->
+          {{item.base_ingridients}}
         </p>
       </div>
 
