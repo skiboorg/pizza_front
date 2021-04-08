@@ -177,11 +177,11 @@
           <div class="checkout-cart__row">
             <p>Сумма</p>
 
-            <p class="text-bold">{{this.$store.getters['cart/getCart'].total_price + delivery_price}}р
+            <p class="text-bold">{{this.$store.getters['cart/getCart'].total_price}}р
                <span v-if="delivery_price>0"><br>+ {{delivery_price}}р (доставка)</span>
               <span v-if="used_bonuses"><br>- {{used_bonuses}}р (баллы)</span>
               <span v-if="used_promo"><br>- {{used_promo}}р (промокод)</span>
-              <span v-if="used_promo || used_bonuses"><br> К оплате: {{this.$store.getters['cart/getCart'].total_price - used_bonuses - used_promo + delivery_price}} р</span>
+              <span v-if="used_promo || used_bonuses || delivery_price>0"><br> К оплате: {{this.$store.getters['cart/getCart'].total_price - used_bonuses - used_promo + delivery_price}} р</span>
             </p>
           </div>
         </div>
