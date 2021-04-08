@@ -89,7 +89,7 @@
 
       </div>
       <div class="item-modal__sizes">
-        <el-radio v-model="pizzaSize" :label="22" >22 см</el-radio>
+        <el-radio v-model="pizzaSize" :label="22" >28 см</el-radio>
         <el-radio v-model="pizzaSize" :label="33" >33 см</el-radio>
         <p>{{weight}} г</p>
       </div>

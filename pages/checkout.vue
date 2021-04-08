@@ -88,7 +88,7 @@
         </div>
 
         <el-button :loading="is_loading" :disabled="!is_data_ok" type="primary" @click="createOrder">Подтвердить заказ на
-          {{this.$store.getters['cart/getCart'].total_price - used_bonuses - used_promo}}р
+          {{this.$store.getters['cart/getCart'].total_price - used_bonuses - used_promo+delivery_price}}р
         </el-button>
         <p class="font-12">Нажимая на кнопку, вы даете согласие на обработку персональных данных</p>
       </div>
@@ -176,10 +176,12 @@
           </div>
           <div class="checkout-cart__row">
             <p>Сумма</p>
-            <p class="text-bold">{{this.$store.getters['cart/getCart'].total_price}}р
+
+            <p class="text-bold">{{this.$store.getters['cart/getCart'].total_price + delivery_price}}р
+               <span v-if="delivery_price>0"><br>+ {{delivery_price}}р (доставка)</span>
               <span v-if="used_bonuses"><br>- {{used_bonuses}}р (баллы)</span>
               <span v-if="used_promo"><br>- {{used_promo}}р (промокод)</span>
-              <span v-if="used_promo || used_bonuses"><br> К оплате: {{this.$store.getters['cart/getCart'].total_price - used_bonuses - used_promo}} р</span>
+              <span v-if="used_promo || used_bonuses"><br> К оплате: {{this.$store.getters['cart/getCart'].total_price - used_bonuses - used_promo + delivery_price}} р</span>
             </p>
           </div>
         </div>
@@ -283,6 +285,10 @@ export default {
     }
   },
   computed:{
+    delivery_price(){
+     return  this.orderData.delivery_type==='Курьером' ? 100 : 0
+    },
+
     is_data_ok (){
       if (this.orderData.delivery_type==='Курьером'){
         return !!this.orderData.name && !!this.orderData.phone && this.orderData.phone.length===18 && !!this.orderData.street && !!this.orderData.house
