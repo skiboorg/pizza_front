@@ -85,24 +85,27 @@
     & .el-button
       width: 150px
   &__add
-
     @extend .d-flex
     margin-left: auto
     margin-bottom: 10px
-    max-width: 185px
+    //max-width: 185px
+    flex-basis: 150px
+    &-wrapper
+       @extend .d-flex
     img
       cursor: pointer
       transition: all .2s ease-in-out
       &:hover
-
         transform: translateY(1px)
-    p
+    &-units
       text-align: center
       background: #F8F9FA
       border-radius: 3px
       flex-basis: 50%
       padding: 5px 10px
       color: $grey-color
+    &-weight
+      font-weight: bold
 
 @media (max-width: 768px)
   .item-card
@@ -142,4 +145,10 @@
     & .el-button
       height: 30px
       padding: 0
+    &__add
+      flex-basis: 100%
+      &-wrapper
+        flex-wrap: wrap
+      &-weight
+        margin-bottom: 10px
 

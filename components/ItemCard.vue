@@ -25,10 +25,14 @@
       </div>
 
       <div class="">
-        <div v-if="!item.category.is_pizza" class="item-card__add">
-          <img @click="minusUnit" src="/round-minus.svg" alt="">
-          <p>{{total_units}} {{unit_name}}</p>
+        <div v-if="!item.category.is_pizza" class="item-card__add-wrapper">
+          <p v-if="item.weight>0" class="item-card__add-weight">Вес {{item.weight}} г</p>
+          <div class="item-card__add">
+            <img  @click="minusUnit" src="/round-minus.svg" alt="">
+          <p class="item-card__add-units">{{total_units}} {{unit_name}}</p>
           <img @click="plusUnit" src="/round-plus.svg" alt="">
+          </div>
+
         </div>
         <div class="item-card__price">
 
