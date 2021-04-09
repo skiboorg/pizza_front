@@ -275,13 +275,15 @@ export default {
         value: this.$store.getters['cart/getCart'].total_price - this.used_bonuses - this.used_promo,
         currency: 'RUB'
       })
+
       if (response.data.formUrl){
         console.log('redirect ',response.data.formUrl)
         window.location.href = response.data.formUrl
       }
       this.orderCode = response.data.code
-      this.orderPlaced = true
+
       this.$auth.loggedIn ?  this.$auth.fetchUser() : null
+      this.$router.push(`/order_self/${this.orderCode}`)
     }
   },
   computed:{

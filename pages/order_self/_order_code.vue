@@ -1,7 +1,7 @@
 <template>
 <div class="order_complete">
-  <h3 class="">Ваш заказ успешно оплачен</h3>
-  <p class="text-bold text-center">Спасибо, за ваш заказ!<br>
+  <h3 class="">Ваш заказ успешно размещен</h3>
+    <p class="text-bold text-center">Спасибо, за ваш заказ!<br>
 Менеджер свяжется с вами в течении 5 минут, для подтверждения заказа.</p>
   <p>Номер заказа <span>{{$route.params.order_code}}</span> </p>
   <el-button plain @click="$router.push('/')">На главную</el-button>
