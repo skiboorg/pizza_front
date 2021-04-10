@@ -417,10 +417,11 @@ export default {
 
         this.notify('Успешно','Аккаунт создан','success')
         this.authModalTab='loginTab'
-        this.$fb('track', 'CompleteRegistration');
+
       }catch (e) {
         this.notify('Ошибка','Проверьте введеные данные','error')
       }
+      this.$fb('track', 'CompleteRegistration');
     },
     async userLoginAction() {
 

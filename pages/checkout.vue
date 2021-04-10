@@ -228,7 +228,7 @@ export default {
         comment:null,
         cashback:0,
          name: this.$auth.loggedIn ? this.$auth.user.fio : null,
-        phone: this.$auth.loggedIn ? this.$auth.user.phone : null,
+        phone: this.$auth.loggedIn ? this.$auth.user.phone : '+7',
         street:null,
           house:null,
           flat:null,
